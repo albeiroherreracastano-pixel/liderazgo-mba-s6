@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kit digital · Sesión 6 · Conflicto y Negociación</title>
+<style>
+:root{--navy:#1F2A5C;--blue:#2C5697;--gold:#B8891C;--green:#3E8E7E;--bg:#F6F8FB;--card:#fff;--line:#E2E8F0;--muted:#5B6576;--soft:#EEF2F8;--rose:#C2416B}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:#1E2533;line-height:1.5;font-size:16px}
+header{background:#fff;border-bottom:1px solid var(--line);padding:10px 14px 0;position:sticky;top:0;z-index:20}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.brand{font-size:.72rem;color:var(--blue);font-weight:700;letter-spacing:.04em}
+.who{font-size:.8rem;color:var(--muted);margin-top:2px}
+nav{display:flex;gap:6px;overflow-x:auto;padding:10px 0;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:0 0 auto;border:1px solid var(--line);background:#fff;color:var(--navy);padding:7px 12px;border-radius:999px;font-size:.85rem;font-weight:600;cursor:pointer}
+nav button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+nav button.done::after{content:" ✓";color:var(--green)}
+nav button.on.done::after{color:#A9DCCD}
+main{max-width:760px;margin:0 auto;padding:16px 14px 90px}
+h1{font-size:1.35rem;color:var(--navy);margin-bottom:4px}
+h2{font-size:1.1rem;color:var(--navy);margin:18px 0 8px}
+h3{font-size:1rem;color:var(--navy);margin:12px 0 6px}
+p{margin-bottom:8px}
+.sub{color:var(--muted);font-size:.9rem;margin-bottom:12px}
+.code{display:inline-block;background:var(--soft);color:var(--blue);font-weight:800;font-size:.75rem;padding:2px 8px;border-radius:999px;margin-bottom:6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.note{background:#FFF8E6;border:1px solid #F1D48A;border-radius:12px;padding:12px;font-size:.92rem;margin-bottom:12px}
+.info{background:var(--soft);border-left:4px solid var(--blue);border-radius:8px;padding:10px 12px;font-size:.92rem;margin-bottom:12px}
+.warn{background:#FDECEF;border-left:4px solid var(--rose);border-radius:8px;padding:10px 12px;font-size:.92rem;margin:8px 0}
+.ok{background:#E9F6F2;border-left:4px solid var(--green);border-radius:8px;padding:10px 12px;font-size:.92rem;margin:8px 0}
+label{display:block;font-weight:600;color:var(--navy);font-size:.92rem;margin:12px 0 4px}
+.hint{font-size:.8rem;color:var(--muted);margin:-2px 0 4px}
+textarea,input[type=text]{width:100%;border:1px solid #CBD5E1;border-radius:10px;padding:10px;font-size:1rem;font-family:inherit;background:#fff}
+textarea{min-height:68px;resize:vertical}
+.btn{display:inline-block;border:none;border-radius:10px;padding:11px 16px;font-size:.95rem;font-weight:700;cursor:pointer;text-decoration:none;text-align:center}
+.btn-p{background:var(--navy);color:#fff}
+.btn-s{background:#fff;color:var(--navy);border:1px solid #CBD5E1}
+.btn-g{background:#25A55F;color:#fff}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.chips button{border:1px solid #CBD5E1;background:#fff;padding:8px 12px;border-radius:999px;font-weight:600;color:var(--navy);cursor:pointer;font-size:.9rem}
+.chips button.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.reason{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-bottom:6px}
+.cs{display:flex;gap:4px}
+.cs button{border:1px solid #CBD5E1;background:#fff;border-radius:8px;padding:8px 10px;font-weight:800;color:var(--navy);cursor:pointer;font-size:.85rem}
+.cs button.on{background:var(--gold);border-color:var(--gold);color:#fff}
+.count{display:flex;gap:10px;margin-top:10px}
+.count div{flex:1;background:var(--soft);border-radius:10px;padding:10px;text-align:center}
+.count b{display:block;font-size:1.4rem;color:var(--navy)}
+.count span{font-size:.78rem;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:.86rem;margin:8px 0}
+th{background:var(--navy);color:#fff;text-align:left;padding:7px}
+td{border-bottom:1px solid var(--line);padding:7px;vertical-align:top}
+.three{display:grid;gap:8px}
+.three .c{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff}
+.three .c b{color:var(--navy)}
+.check{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}
+.check:last-child{border-bottom:none}
+.yn{display:flex;gap:4px;flex:0 0 auto}
+.yn button{border:1px solid #CBD5E1;background:#fff;border-radius:8px;padding:7px 10px;font-weight:700;color:var(--navy);cursor:pointer;font-size:.85rem}
+.yn button.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.role{border:2px solid var(--gold);border-radius:14px;padding:14px;background:#FFFCF3}
+.role h3{margin-top:0}
+.small{font-size:.82rem;color:var(--muted)}
+pre.out{white-space:pre-wrap;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;font-family:inherit;font-size:.86rem;max-height:340px;overflow:auto}
+.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 16px;border-radius:999px;font-size:.9rem;display:none;z-index:50}
+.emap{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0}
+.emap .q{border-radius:12px;padding:10px;border:1px solid var(--line)}
+.emap .q.pos{background:#EEF2F8}
+.emap .q.int{background:#FFF8E6}
+.emap .q h4{font-size:.9rem;color:var(--navy);margin-bottom:2px}
+.emap .q .t{font-size:.72rem;font-weight:800;letter-spacing:.04em;margin-bottom:4px}
+.emap .q.pos .t{color:var(--blue)}
+.emap .q.int .t{color:var(--gold)}
+.emap textarea{min-height:70px;font-size:.92rem}
+.prog{height:6px;background:var(--soft);border-radius:999px;overflow:hidden;margin:6px 0 2px}
+.prog div{height:100%;background:var(--green)}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><div class="brand">MBA · Liderazgo y Dirección de Equipos e Individuos</div><img src="data:image/png;base64,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" alt="Pontificia Universidad Javeriana Bogotá" style="height:34px;width:auto"></div>
+  <div class="who" id="who">Sesión 6 · Conflicto y Negociación</div>
+  <nav id="nav"></nav>
+</header>
+<main id="main"></main>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------- estado ---------- */
+let S={};
+try{S=JSON.parse(localStorage.getItem('kitS6')||'{}')}catch(e){S={}}
+function save(){try{localStorage.setItem('kitS6',JSON.stringify(S))}catch(e){}}
+function v(k,d=''){return S[k]!==undefined?S[k]:d}
+function setv(k,val){S[k]=val;save()}
+function esc(t){return String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(()=>t.style.display='none',2200)}
+function ta(k,label,ph='',hint=''){return `<label>${label}</label>${hint?`<div class="hint">${hint}</div>`:''}<textarea data-k="${k}" placeholder="${esc(ph)}">${esc(v(k))}</textarea>`}
+function tx(k,label,ph='',hint=''){return `<label>${label}</label>${hint?`<div class="hint">${hint}</div>`:''}<input type="text" data-k="${k}" placeholder="${esc(ph)}" value="${esc(v(k))}">`}
+function chips(k,opts,multi=false){
+ const cur=v(k,multi?[]:'');
+ return `<div class="chips" data-chips="${k}" data-multi="${multi?1:0}">${opts.map(o=>{const on=multi?cur.includes(o):cur===o;return `<button type="button" data-o="${esc(o)}" class="${on?'on':''}">${esc(o)}</button>`}).join('')}</div>`}
+function bindAll(root){
+ root.querySelectorAll('[data-k]').forEach(el=>{el.addEventListener('input',()=>{setv(el.dataset.k,el.value);nav()})});
+ root.querySelectorAll('[data-chips]').forEach(box=>{
+  const k=box.dataset.chips,multi=box.dataset.multi==='1';
+  box.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+   const o=b.dataset.o;
+   if(multi){let a=v(k,[]).slice();a=a.includes(o)?a.filter(x=>x!==o):a.concat(o);setv(k,a)}
+   else setv(k,v(k)===o?'':o);
+   render(true)})})
+}
+async function copyText(txt){try{await navigator.clipboard.writeText(txt);toast('Copiado')}catch(e){toast('No se pudo copiar: selecciona el texto a mano')}}
+function waLink(txt){return 'https://wa.me/?text='+encodeURIComponent(txt)}
+function f(k){return (v(k)||'').trim()}
+
+/* ---------- vistas ---------- */
+const VIEWS=[
+ ['inicio','Inicio'],['caso','6.0 · Mi caso'],['filtro','6.1 · El filtro'],['gen','6.2 · Generaciones'],
+ ['conv','6.3 · Conversación'],['cosecha','6.4 · La cosecha'],['neg','6.5 · Negociación'],
+ ['registro','6.6 · Registro'],['comp','6.7 · Compromiso'],['todo','Enviarme todo']];
+const DONE={
+ caso:()=>f('c_rol')&&f('c_negociar'),
+ filtro:()=>f('r_o1')&&f('r_y1')&&v('filtros',[]).length,
+ gen:()=>v('g_clase'),
+ conv:()=>f('g_apertura'),
+ cosecha:()=>v('cos_rol'),
+ neg:()=>f('e_piensa')&&f('n_intereses')&&f('n_maan'),
+ registro:()=>f('rp_interes'),
+ comp:()=>f('k_quien')&&f('k_cuando')
+};
+let cur='inicio';
+function nav(){const n=document.getElementById('nav');
+ n.innerHTML=VIEWS.map(([id,l])=>`<button data-v="${id}" class="${cur===id?'on':''} ${DONE[id]&&DONE[id]()?'done':''}">${l}</button>`).join('');
+ n.querySelectorAll('button').forEach(b=>b.onclick=()=>go(b.dataset.v))}
+function go(id){cur=id;try{history.replaceState(null,'','#'+id)}catch(e){};render();window.scrollTo(0,0)}
+function next(id,label){return `<div class="row"><button class="btn btn-p" data-go="${id}">${label} →</button></div>`}
+function render(keepScroll){
+ const y=window.scrollY;
+ const m=document.getElementById('main');
+ const name=f('nombre');
+ document.getElementById('who').textContent=name?`Sesión 6 · ${name}`:'Sesión 6 · Conflicto y Negociación';
+ nav();
+ const fn={inicio:vInicio,caso:vCaso,filtro:vFiltro,gen:vGen,conv:vConv,cosecha:vCosecha,neg:vNeg,registro:vRegistro,comp:vComp,todo:vTodo}[cur]||vInicio;
+ m.innerHTML=fn();bindAll(m);
+ m.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+ hooks.forEach(h=>h());hooks=[];
+ if(keepScroll)window.scrollTo(0,y);
+}
+let hooks=[];
+
+function vInicio(){
+ const done=Object.keys(DONE).filter(k=>DONE[k]()).length,tot=Object.keys(DONE).length;
+ return `<h1>Conflicto y Negociación</h1>
+ <p class="sub">Sesión 6 · miércoles 11 de noviembre de 2026</p>
+ <div class="card"><h3>La pregunta de la noche</h3>
+ <p style="font-size:1.08rem"><b>¿Qué hago cuando la relación y el resultado parecen pelearse?</b></p>
+ <p>Hoy trabajan <b>un solo caso real</b> de principio a fin: lo escriben, revisan con qué filtro miran al otro, preparan la conversación, la negocian y salen con un compromiso.</p></div>
+ ${tx('nombre','Su nombre','Para que su resumen salga con su nombre')}
+ <div class="info">Lo que escriba se guarda <b>solo en este teléfono</b>, aunque se vaya la conexión. Nadie más lo ve, ni el profesor. Al final, en <b>Enviarme todo</b>, se manda una copia por WhatsApp: es el insumo de su taller.</div>
+ <div class="card"><h3>Su avance</h3><div class="prog"><div style="width:${Math.round(done/tot*100)}%"></div></div><p class="small">${done} de ${tot} secciones con lo esencial completo</p></div>
+ <div class="note"><b>Reglas de la noche.</b> Ningún conflicto con alguien de esta sala. Cambie nombres y cifras de su empresa. En cualquier práctica, cualquiera puede decir <b>"pausa"</b> y la ronda se detiene sin explicación.</div>
+ ${next('caso','Empezar con mi caso')}`}
+
+function vCaso(){
+ const neg=f('c_negociar');
+ return `<span class="code">6.0 · Apertura</span><h1>Mi caso de la noche</h1>
+ <p class="sub">Versión completa y privada. En el post-it amarillo va solo la versión corta, en mayúsculas y sin nombres.</p>
+ <div class="card">
+ ${tx('c_rol','1. ¿Con quién es el conflicto?','Su rol, no su nombre: "mi par de operaciones", "la gerente regional"…')}
+ ${ta('c_juego','2. ¿Qué está en juego?','Para mí, para el otro, para el equipo o el negocio')}
+ ${ta('c_negociar','3. ¿Qué hay que negociar?','Recursos, plazos, alcance, roles, condiciones…','Sin esto, el caso no sirve para la noche. Si no lo encuentra, pregúntese: ¿qué tendría que cambiar para que el conflicto se resuelva?')}
+ ${neg?'':'<div class="warn">Falta lo que hay que negociar. Si no aparece, levante la mano: lo buscamos juntos.</div>'}
+ ${ta('c_intente','4. ¿Qué he intentado?')}
+ ${ta('c_abierto','5. ¿Por qué sigue abierto?','La razón honesta, no la oficial')}
+ </div>
+ <div class="info"><b>Para el post-it (en mayúsculas):</b> rol del otro · qué está en juego · qué intenté · por qué sigue abierto. Dóblelo y échelo a la bolsa.</div>
+ ${next('filtro','Siguiente: el filtro')}`}
+
+const FILTROS=['Edad','Género','Región','Profesión','Origen social','Antigüedad','Nacionalidad','Estilo de liderazgo (S5)','Otro'];
+function reasonRow(k){return `<div class="reason"><input type="text" data-k="${k}" placeholder="Razón" value="${esc(v(k))}"><div class="cs">${['C','S'].map(o=>`<button type="button" data-cs="${k}_t" data-o="${o}" class="${v(k+'_t')===o?'on':''}">${o}</button>`).join('')}</div></div>`}
+function vFiltro(){
+ hooks.push(()=>{document.querySelectorAll('[data-cs]').forEach(b=>b.onclick=()=>{const k=b.dataset.cs;setv(k,v(k)===b.dataset.o?'':b.dataset.o);render(true)})});
+ const cnt=(p,t)=>[1,2,3].filter(i=>v(`r_${p}${i}_t`)===t).length;
+ return `<span class="code">6.1 · ¿Quién es el problema?</span><h1>El filtro</h1>
+ <p class="sub">Sobre su caso. Marque cada razón: <b>C</b> si es de carácter ("es terco"), <b>S</b> si es de situación ("tiene presión de su jefe").</p>
+ <div class="card"><h3>1. ¿Por qué el otro actúa así?</h3>${[1,2,3].map(i=>reasonRow('r_o'+i)).join('')}</div>
+ <div class="card"><h3>2. ¿Por qué actúo yo así?</h3>${[1,2,3].map(i=>reasonRow('r_y'+i)).join('')}</div>
+ <div class="card"><h3>3. El conteo</h3>
+ <div class="count"><div><b>${cnt('o','C')} C · ${cnt('o','S')} S</b><span>el otro</span></div><div><b>${cnt('y','C')} C · ${cnt('y','S')} S</b><span>yo</span></div></div>
+ <p class="small" style="margin-top:8px">Si al otro lo explica su carácter y a usted su situación, acaba de ver el error fundamental de atribución (Ross, 1977) en su propio caso.</p></div>
+ <div class="card"><h3>4. ¿Qué rasgo del otro usé sin decirlo?</h3><p class="small">Puede marcar más de uno. Escriba el principal en el post-it verde y péguelo en la pared.</p>
+ ${chips('filtros',FILTROS,true)}
+ ${ta('f_como','¿Cómo aparece ese filtro en mi explicación?','"Como es joven, no entiende…", "como viene de ventas…"')}</div>
+ <div class="card"><h3>5. La historia del otro</h3><p class="small">En pareja: cuente su caso en primera persona como si fuera el otro. Su compañero le hace una sola pregunta.</p>
+ ${ta('f_sabe','¿Qué sabe esa persona que yo no sé?')}
+ ${ta('f_equipo','Del otro al equipo: ¿a quién más le aplico este filtro, y a quién no invito a la mesa por eso?')}</div>
+ ${next('gen','Siguiente: generaciones')}`}
+
+function vGen(){
+ const tiene=v('g_tiene');
+ return `<span class="code">6.2 · Generaciones</span><h1>¿Es la generación o es otra cosa?</h1>
+ <table><tr><th>Generación</th><th>Nacidos</th></tr>
+ <tr><td><i>Boomers</i></td><td>1946–1964</td></tr><tr><td>Generación X</td><td>1965–1980</td></tr>
+ <tr><td><i>Millennials</i></td><td>1981–1996</td></tr><tr><td>Centennials (Z)</td><td>1997–2012</td></tr></table>
+ <div class="info">La evidencia (National Academies, 2020; Costanza et al., 2012) muestra diferencias pequeñas entre generaciones en actitudes laborales. Las tensiones suelen explicarse mejor por la edad y la etapa de vida, la antigüedad, el momento de carrera, los eventos de época o el poder.</div>
+ <div class="card"><h3>1. ¿Su caso tiene un componente generacional?</h3>${chips('g_tiene',['Sí','No'])}
+ ${tiene==='No'?ta('g_otra','Entonces trabaje otra tensión de su equipo entre personas de distinta edad','Con quién y sobre qué'):''}</div>
+ <div class="card"><h3>2. Reclasifíquela: ¿qué la explica mejor?</h3>
+ ${chips('g_clase',['Generación','Edad y etapa de vida','Antigüedad','Momento de carrera','Poder o jerarquía','Tecnología','Otra'])}
+ ${ta('g_porque','¿Por qué la clasifico así?')}
+ ${ta('g_saber','¿Qué necesito saber de esa persona en lugar de su año de nacimiento?')}</div>
+ ${next('conv','Siguiente: la conversación')}`}
+
+const OBS=['¿Culpó?','¿Nombró un sentimiento?','¿Preguntó antes de explicar?','¿Usó un recurso cuando el otro escaló?'];
+function vConv(){
+ const mode=v('conv_mode','guion');
+ hooks.push(()=>{document.querySelectorAll('[data-yn]').forEach(b=>b.onclick=()=>{const k=b.dataset.yn;setv(k,v(k)===b.dataset.o?'':b.dataset.o);render(true)});
+  const c=document.getElementById('copyObs');if(c)c.onclick=()=>copyText(obsText())});
+ const theory=`<div class="three">
+ <div class="c"><b>Qué pasó.</b> No discuta quién tiene la razón: explore las dos historias. Separe intención de impacto. Cambie culpa por contribución: ¿qué parte puse yo?</div>
+ <div class="c"><b>Sentimientos.</b> Los no dichos se cuelan en el tono. Nómbrelos sin acusar.</div>
+ <div class="c"><b>Identidad.</b> ¿Qué dice este conflicto sobre mí? ¿Soy competente, buena persona, merezco respeto? Ahí se escala casi siempre.</div></div>
+ <div class="info" style="margin-top:10px"><b>Abra desde la tercera historia:</b> describa la diferencia como la contaría un observador neutral. "Veo que tú y yo tenemos lecturas distintas sobre ___ y quiero entender la tuya."</div>
+ <div class="ok"><b>Si el otro escala, dos recursos:</b><br>1. <b>Reconocer la emoción:</b> "Veo que esto te molesta mucho." (escucha empática, S3)<br>2. <b>Reencuadrar:</b> de culpa a contribución ("los dos pusimos algo aquí"), de la verdad a las percepciones ("así lo viviste tú").</div>
+ <p class="small">Stone, Patton y Heen (1999). <i>Difficult Conversations</i>.</p>`;
+ const guion=`<div class="card"><h3>Mi guion</h3>
+ ${ta('g_proposito','1. ¿Para qué quiero tener esta conversación?','Lo que quiero que pase, no lo que quiero que el otro admita')}
+ ${ta('g_apertura','2. Frase de apertura en tercera historia','"Tú y yo vemos ___ de forma distinta. Quiero entender cómo lo ves tú y contarte cómo lo veo yo."')}
+ ${ta('g_mia','3. Mi historia: qué pasó según yo')}
+ ${ta('g_suya','4. Su historia: qué pasó según el otro')}
+ ${ta('g_contrib','5. Mi contribución al problema')}
+ ${ta('g_impacto','6. Intención frente a impacto','Lo que creo que el otro quiso y el impacto que tuvo en mí. Y al revés.')}
+ ${ta('g_sent','7. El sentimiento que no he dicho')}
+ ${ta('g_ident','8. ¿Qué se juega mi identidad?')}
+ ${ta('g_preg','9. Pregunta para abrir')}
+ <label>10. Nivel de escucha que voy a sostener (S3)</label>${chips('g_nivel',['Fáctico','Empático','Generativo'])}
+ <label>11. Si escala, voy a usar</label>${chips('g_recurso',['Reconocer la emoción','Reencuadrar','Los dos'])}</div>`;
+ const obs=`<div class="card"><h3>Pauta del observador</h3><p class="small">Marque mientras A conversa. Al terminar, 3 minutos de devolución.</p>
+ ${tx('o_nombre','¿A quién observo?','Nombre del compañero')}
+ ${OBS.map((q,i)=>`<div class="check"><span>${q}</span><div class="yn">${['Sí','No'].map(o=>`<button type="button" data-yn="o_${i}" data-o="${o}" class="${v('o_'+i)===o?'on':''}">${o}</button>`).join('')}</div></div>`).join('')}
+ <div class="check"><span>¿La relación salió…?</span></div>${chips('o_rel',['Más fuerte','Igual','Más débil'])}
+ ${ta('o_nota','Lo que vi y una pregunta para A','Sin consejos')}
+ <div class="row"><button class="btn btn-s" id="copyObs">Copiar para enviárselo a A</button></div></div>`;
+ return `<span class="code">6.3 · Conversación difícil</span><h1>La conversación que vengo evitando</h1>
+ <div class="card">${theory}</div>
+ <div class="chips" data-chips="conv_mode" data-multi="0" style="margin-bottom:10px">${[['guion','Mi guion'],['obs','Soy observador']].map(([id,l])=>`<button type="button" data-o="${id}" class="${mode===id?'on':''}">${l}</button>`).join('')}</div>
+ ${mode==='obs'?obs:guion}
+ <div class="note"><b>En el trío:</b> 1' para describir al otro, 4' de conversación y 3' de devolución. Quien hace de B recibe un post-it doblado: a los 90 segundos escala según lo que diga, con intensidad 6 sobre 10. Cualquiera puede decir "pausa".</div>
+ ${next('cosecha','Siguiente: la cosecha')}`}
+function obsText(){const r=OBS.map((q,i)=>`${q} ${v('o_'+i)||'—'}`).join('\n');
+ return `Devolución · Sesión 6\nObservé a: ${f('o_nombre')}\n${r}\nLa relación salió: ${v('o_rel')||'—'}\n${f('o_nota')}`}
+
+/* ---------- la cosecha ---------- */
+const CODES={'4817':'A','2953':'B','7006':'O'};
+const ROLES={
+A:{t:'Rol A · Gerente de la línea de chocolates',b:`<p>Usted dirige la línea de chocolates finos del <b>Grupo Agroindustrial Cordillera</b> (empresa ficticia). Tiene un contrato con un comprador suizo que paga prima por cacao fino de aroma del Huila. Si no entrega en enero, pierde el contrato y la relación con el cliente más rentable de la línea.</p>
+<p>La única finca certificada que puede abastecerlo a tiempo es <b>El Recodo</b>, en Gigante (Huila). Su dueño, don Hernán, vende la cosecha completa (4 toneladas de mazorca) a un solo comprador y en un solo lote. Pide $28 millones y le venderá al primero que le ofrezca $25 millones o más, en las próximas 48 horas.</p>
+<p>Usted necesita <b>el grano</b>, que se fermenta y se seca en la finca. Su jefe de calidad le explicó que la fermentación necesita que el grano conserve cerca del <b>40% del mucílago</b> (la pulpa blanca que lo rodea). El resto escurre y normalmente se bota.</p>
+<p>Su presidente le autorizó hasta <b>$30 millones</b>. Acaba de enterarse de que la gerente de bebidas del mismo grupo también quiere comprar la cosecha de El Recodo. Reúnase con ella.</p>`},
+B:{t:'Rol B · Gerente de la línea de bebidas',b:`<p>Usted dirige la línea de bebidas del <b>Grupo Agroindustrial Cordillera</b> (empresa ficticia). En febrero lanza una bebida a base de <b>mucílago de cacao</b> (la pulpa blanca que rodea el grano), con un acuerdo ya firmado con una cadena de supermercados. Si no llega con producto, paga una multa y el lanzamiento se cae.</p>
+<p>La única finca certificada que puede abastecerla a tiempo es <b>El Recodo</b>, en Gigante (Huila). Su dueño, don Hernán, vende la cosecha completa (4 toneladas de mazorca) a un solo comprador y en un solo lote. Pide $28 millones y le venderá al primero que le ofrezca $25 millones o más, en las próximas 48 horas.</p>
+<p>Usted necesita <b>el mucílago fresco</b>, extraído dentro de las 24 horas siguientes a abrir la mazorca. El grano no le sirve: tendría que venderlo con pérdida. Su jefe de producción calcula que necesita al menos el <b>60% del mucílago</b> de la cosecha para la primera producción.</p>
+<p>Su presidente le autorizó hasta <b>$30 millones</b>. Acaba de enterarse de que el gerente de chocolates del mismo grupo también quiere comprar la cosecha de El Recodo. Reúnase con él.</p>`},
+O:{t:'Observador de la cosecha',b:`<p>Usted no negocia. Observe a una pareja y marque lo que vea. Al revelar los acuerdos, cuente lo que observó.</p>`}
+};
+const OBSC=['¿Alguien preguntó "¿para qué la necesitas?" en los primeros 3 minutos?','¿Alguien propuso partir todo a la mitad?','¿Compartieron información real de su rol?','¿Usaron un criterio objetivo (precio, plazo, porcentajes)?','¿Llegaron a un acuerdo en el que ganan los dos?'];
+function vCosecha(){
+ const r=v('cos_rol');
+ hooks.push(()=>{const b=document.getElementById('codeBtn');if(b)b.onclick=()=>{const c=document.getElementById('codeIn').value.trim();if(CODES[c]){setv('cos_rol',CODES[c]);render()}else toast('Código no válido')};
+  const x=document.getElementById('cosReset');if(x)x.onclick=()=>{setv('cos_rol','');render()};
+  document.querySelectorAll('[data-yn]').forEach(b=>b.onclick=()=>{const k=b.dataset.yn;setv(k,v(k)===b.dataset.o?'':b.dataset.o);render(true)})});
+ if(!r)return `<span class="code">6.4 · La cosecha</span><h1>La cosecha</h1>
+ <p class="sub">Abra solo su rol, con el código del post-it que le entregó el profesor. No le muestre la pantalla a nadie.</p>
+ <div class="card"><label>Código de mi rol</label><input type="text" id="codeIn" inputmode="numeric" placeholder="4 dígitos"><div class="row"><button class="btn btn-p" id="codeBtn">Abrir mi rol</button></div></div>`;
+ const R=ROLES[r];
+ return `<span class="code">6.4 · La cosecha</span><h1>La cosecha</h1>
+ <div class="role"><h3>${R.t}</h3>${R.b}</div>
+ ${r==='O'?`<div class="card"><h3>Pauta</h3>${tx('co_pareja','Pareja que observo')}${OBSC.map((q,i)=>`<div class="check"><span>${q}</span><div class="yn">${['Sí','No'].map(o=>`<button type="button" data-yn="co_${i}" data-o="${o}" class="${v('co_'+i)===o?'on':''}">${o}</button>`).join('')}</div></div>`).join('')}${ta('co_nota','Lo que más me llamó la atención')}</div>`
+ :`<div class="card">${ta('cos_acuerdo','Nuestro acuerdo','Quién compra, cuánto paga cada uno y qué se lleva cada uno')}${ta('cos_preg','Después de la revelación: ¿qué pregunta nos faltó hacer?')}</div>`}
+ <p class="small">Estructura inspirada en el ejercicio <i>Ugli Orange</i> de Robert J. House. Caso y roles propios.</p>
+ <div class="row"><button class="btn btn-s" id="cosReset">Cambiar código</button></div>
+ ${next('neg','Siguiente: mi negociación')}`}
+
+function vNeg(){
+ return `<span class="code">6.5 · Negociación</span><h1>Preparo mi negociación</h1>
+ <div class="card"><h3>Los principios (Fisher, Ury y Patton, 2011)</h3>
+ <table><tr><td><b>Personas</b></td><td>Separe a las personas del problema: duro con el problema, suave con la persona.</td></tr>
+ <tr><td><b>Intereses</b></td><td>La posición es lo que pido; el interés es para qué lo pido.</td></tr>
+ <tr><td><b>Opciones</b></td><td>Invente varias antes de decidir. Busque beneficio mutuo.</td></tr>
+ <tr><td><b>Criterios</b></td><td>Use un estándar que ninguno controle: mercado, norma, precedente, dato.</td></tr>
+ <tr><td><b>MAAN</b></td><td>Mejor alternativa a un acuerdo negociado: lo que hago si no hay acuerdo. Si no la conozco, negocio a ciegas.</td></tr></table></div>
+ <div class="card"><h3>Paso 1 · Mapa de empatía de mi contraparte <span class="small">(3 minutos)</span></h3>
+ <p class="small">Sobre la persona real con la que va a negociar. Escriba lo que sabe, no lo que supone. Lo que sea suposición, márquelo con "(?)": la inversión de roles lo va a poner a prueba.</p>
+ ${f('c_negociar')?`<div class="info"><b>Lo que hay que negociar:</b> ${esc(f('c_negociar'))}</div>`:''}
+ <div class="emap">
+  <div class="q pos"><div class="t">→ SU POSICIÓN</div><h4>Dice</h4><textarea data-k="e_dice" placeholder="Lo que pide, las frases que repite">${esc(v('e_dice'))}</textarea></div>
+  <div class="q pos"><div class="t">→ SU POSICIÓN</div><h4>Hace</h4><textarea data-k="e_hace" placeholder="Lo que hace o deja de hacer">${esc(v('e_hace'))}</textarea></div>
+  <div class="q int"><div class="t">→ SUS INTERESES</div><h4>Piensa</h4><textarea data-k="e_piensa" placeholder="Lo que le preocupa y no dice">${esc(v('e_piensa'))}</textarea></div>
+  <div class="q int"><div class="t">→ SUS INTERESES</div><h4>Siente y teme</h4><textarea data-k="e_siente" placeholder="Qué teme perder: estatus, control, carga, prestigio…">${esc(v('e_siente'))}</textarea></div>
+ </div>
+ <p class="small">Lo de arriba es su posición. Lo de abajo son sus intereses. Use lo que descubrió en "la historia del otro" (6.1).</p></div>
+ <div class="card"><h3>Paso 2 · Hoja de preparación <span class="small">(5 minutos)</span></h3>
+ ${ta('n_posicion','1. Mi posición','Lo que voy a pedir')}
+ ${ta('n_intereses','2. Mis intereses','Para qué lo pido: lo que de verdad necesito')}
+ ${ta('n_suposicion','3. Su posición','Sale de "dice" y "hace" en el mapa')}
+ ${ta('n_suint','4. Sus intereses probables','Salen de "piensa" y "siente y teme" en el mapa')}
+ ${ta('n_opciones','5. Tres opciones','Que sirvan a los dos')}
+ ${ta('n_criterio','6. Un criterio objetivo')}
+ ${ta('n_maan','7. Mi MAAN','Si no llegamos a un acuerdo, yo voy a…')}
+ ${ta('n_sumaan','8. Su MAAN','Si no llegamos a un acuerdo, el otro va a…')}
+ <label>9. Frase de apertura</label>
+ ${f('g_apertura')?`<div class="info">${esc(f('g_apertura'))}</div><p class="small">Es la de su guion (6.3). Si la quiere ajustar, hágalo allá.</p>`:'<div class="warn">Escriba su frase de apertura en 6.3.</div>'}
+ </div>
+ <div class="note"><b>Role-play en pareja (14'):</b> 2' para describir a su contraparte · 5' de negociación · <b>4' con los roles invertidos</b> (usted hace de su contraparte) · 3' de devolución. En el trío, rondas de 9'.</div>
+ ${next('registro','Siguiente: registro')}`}
+
+function vRegistro(){
+ return `<span class="code">6.6 · Registro</span><h1>Registro del role-play</h1>
+ <div class="card">
+ ${ta('rp_interes','1. El interés de mi contraparte que descubrí al jugar su papel')}
+ ${ta('rp_posint','2. ¿Qué estaba defendiendo como posición que en realidad era un interés?')}
+ ${ta('rp_mapa','3. Mi mapa de empatía, puesto a prueba: ¿qué casilla acerté y cuál era proyección mía?')}
+ ${ta('rp_devol','4. La devolución de mi compañero')}
+ <label>5. La relación salió…</label>${chips('rp_rel',['Más fuerte','Igual','Más débil'])}
+ ${ta('rp_maan','6. ¿Cambió mi MAAN o la de mi contraparte?')}
+ ${ta('rp_cambio','7. Qué cambiaría en la conversación real')}</div>
+ ${next('comp','Siguiente: mi compromiso')}`}
+
+function compText(){return `Compromiso · Sesión 6 · ${f('nombre')}
+Con quién: ${f('k_quien')}
+Cuándo (antes del martes 17 de noviembre): ${f('k_cuando')}
+Frase de apertura: ${f('k_apertura')||f('g_apertura')}
+Interés que voy a indagar: ${f('k_interes')}
+Mi MAAN: ${f('k_maan')||f('n_maan')}
+Si escala, voy a usar: ${v('k_recurso')||v('g_recurso')||''}
+Éxito: la relación queda en pie y ${f('k_exito')}
+
+Te nombro mi testigo. Te reporto antes del martes 17.`}
+function vComp(){
+ hooks.push(()=>{const a=document.getElementById('wa');if(a)a.href=waLink(compText());const c=document.getElementById('cpy');if(c)c.onclick=()=>copyText(compText());
+  document.querySelectorAll('textarea[data-k^="k_"],input[data-k^="k_"]').forEach(el=>el.addEventListener('input',()=>{document.getElementById('wa').href=waLink(compText())}))});
+ return `<span class="code">6.7 · Compromiso</span><h1>Mi compromiso real</h1>
+ <p class="sub">Un solo compromiso, sobre el mismo caso: abro con la conversación y negocio desde los intereses.</p>
+ <div class="card">
+ ${tx('k_quien','1. Con quién (rol)',f('c_rol'))}
+ ${tx('k_cuando','2. Cuándo','Día y hora, antes del martes 17')}
+ ${ta('k_apertura','3. Frase de apertura en tercera historia',f('g_apertura')||'','Si la deja vacía, se usa la de su guion')}
+ ${ta('k_interes','4. El interés que voy a indagar')}
+ ${ta('k_maan','5. Mi MAAN',f('n_maan')||'','Si la deja vacía, se usa la de su preparación')}
+ <label>6. Si escala, voy a usar</label>${chips('k_recurso',['Reconocer la emoción','Reencuadrar','Los dos'])}
+ ${tx('k_exito','7. Señal de éxito que no sea ganar: "la relación queda en pie y…"')}</div>
+ <div class="card"><h3>Envíeselo a su testigo</h3><p class="small">Ese mensaje es la firma. Reporta el resultado en el taller de la Sesión 7.</p>
+ <div class="row"><a class="btn btn-g" id="wa" target="_blank" rel="noopener" href="#">Enviar por WhatsApp</a><button class="btn btn-s" id="cpy">Copiar</button></div></div>
+ ${next('todo','Siguiente: enviarme todo')}`}
+
+function L(lbl,k){const x=Array.isArray(v(k))?v(k).join(', '):f(k);return x?`${lbl}: ${x}\n`:''}
+function allText(){
+ const rs=(p)=>[1,2,3].map(i=>f(`r_${p}${i}`)?`- ${f(`r_${p}${i}`)} (${v(`r_${p}${i}_t`)||'?'})`:'').filter(Boolean).join('\n');
+ return `SESIÓN 6 · CONFLICTO Y NEGOCIACIÓN
+${f('nombre')} · MBA PUJ 2630 · 11 nov 2026
+
+1. MI CASO
+${L('Con quién','c_rol')}${L('Qué está en juego','c_juego')}${L('Qué hay que negociar','c_negociar')}${L('Qué he intentado','c_intente')}${L('Por qué sigue abierto','c_abierto')}
+2. EL FILTRO
+Por qué el otro actúa así:
+${rs('o')}
+Por qué actúo yo así:
+${rs('y')}
+${L('Filtros que usé','filtros')}${L('Cómo aparece','f_como')}${L('Lo que el otro sabe y yo no','f_sabe')}${L('El filtro en mi equipo','f_equipo')}
+3. GENERACIONES
+${L('Componente generacional en mi caso','g_tiene')}${L('Otra tensión','g_otra')}${L('Lo que mejor la explica','g_clase')}${L('Por qué','g_porque')}${L('Lo que necesito saber de esa persona','g_saber')}
+4. GUION DE CONVERSACIÓN DIFÍCIL
+${L('Propósito','g_proposito')}${L('Apertura (tercera historia)','g_apertura')}${L('Mi historia','g_mia')}${L('Su historia','g_suya')}${L('Mi contribución','g_contrib')}${L('Intención e impacto','g_impacto')}${L('Sentimiento no dicho','g_sent')}${L('Identidad','g_ident')}${L('Pregunta para abrir','g_preg')}${L('Nivel de escucha','g_nivel')}${L('Recurso si escala','g_recurso')}
+5. LA COSECHA
+${L('Acuerdo','cos_acuerdo')}${L('Pregunta que faltó','cos_preg')}
+6. PREPARACIÓN DE LA NEGOCIACIÓN
+Mapa de empatía de mi contraparte:
+${L('Dice','e_dice')}${L('Hace','e_hace')}${L('Piensa','e_piensa')}${L('Siente y teme','e_siente')}${L('Mi posición','n_posicion')}${L('Mis intereses','n_intereses')}${L('Su posición','n_suposicion')}${L('Sus intereses','n_suint')}${L('Opciones','n_opciones')}${L('Criterio objetivo','n_criterio')}${L('Mi MAAN','n_maan')}${L('Su MAAN','n_sumaan')}
+7. REGISTRO DEL ROLE-PLAY
+${L('Interés descubierto siendo el otro','rp_interes')}${L('Posición que era interés','rp_posint')}${L('Mapa de empatía: acierto y proyección','rp_mapa')}${L('Devolución del compañero','rp_devol')}${L('La relación salió','rp_rel')}${L('Cambio de MAAN','rp_maan')}${L('Qué cambiaría','rp_cambio')}
+8. COMPROMISO
+${compText()}`}
+function vTodo(){
+ const t=allText();
+ hooks.push(()=>{document.getElementById('cpAll').onclick=()=>copyText(t);document.getElementById('waAll').href=waLink(t);
+  document.getElementById('clr').onclick=()=>{const b=document.getElementById('clr');if(b.dataset.c){S={};save();toast('Kit borrado');go('inicio')}else{b.dataset.c=1;b.textContent='Toque otra vez para borrar todo'}}});
+ return `<h1>Enviarme todo</h1>
+ <p class="sub">Es el insumo de su taller (entrega: lunes 23 de noviembre). Mándeselo antes de salir del auditorio.</p>
+ <div class="row"><a class="btn btn-g" id="waAll" target="_blank" rel="noopener" href="#">Enviarme por WhatsApp</a><button class="btn btn-p" id="cpAll">Copiar todo</button></div>
+ <p class="small" style="margin-top:8px">En WhatsApp, elija "Tú" o su propio chat. Para correo: copie y pegue.</p>
+ <pre class="out">${esc(t)}</pre>
+ <div class="card"><h3>El taller de esta sesión</h3><p>(1) el caso con su filtro, (2) guion de conversación difícil, (3) hoja de preparación, (4) registro del role-play, (5) ficha de aprendizaje y (6) seguimiento del primer intento de la práctica de la S5.</p>
+ <p class="small">Abstract de Fisher, Ury y Patton y Stone, Patton y Heen: miércoles 18. Compromiso: antes del martes 17; se reporta en el taller de la S7.</p></div>
+ <div class="row"><button class="btn btn-s" id="clr">Borrar mis datos de este teléfono</button></div>`}
+
+/* ---------- arranque ---------- */
+const h=(location.hash||'').slice(1);if(VIEWS.some(x=>x[0]===h))cur=h;
+window.addEventListener('hashchange',()=>{const k=location.hash.slice(1);if(VIEWS.some(x=>x[0]===k)&&k!==cur){cur=k;render()}});
+render();
+</script>
+</body>
+</html>
