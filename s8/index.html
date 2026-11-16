@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kit digital · Sesión 8 · Liderando a otros</title>
+<style>
+:root{--navy:#1F2A5C;--blue:#2C5697;--gold:#B8891C;--green:#3E8E7E;--bg:#F6F8FB;--card:#fff;--line:#E2E8F0;--muted:#5B6576;--soft:#EEF2F8;--rose:#C2416B}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:#1E2533;line-height:1.5;font-size:16px}
+header{background:#fff;border-bottom:1px solid var(--line);padding:10px 14px 0;position:sticky;top:0;z-index:20}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.brand{font-size:.72rem;color:var(--blue);font-weight:700;letter-spacing:.04em}
+.who{font-size:.8rem;color:var(--muted);margin-top:2px}
+nav{display:flex;gap:6px;overflow-x:auto;padding:10px 0;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:0 0 auto;border:1px solid var(--line);background:#fff;color:var(--navy);padding:7px 12px;border-radius:999px;font-size:.85rem;font-weight:600;cursor:pointer}
+nav button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+nav button.done::after{content:" ✓";color:var(--green)}
+nav button.on.done::after{color:#A9DCCD}
+main{max-width:760px;margin:0 auto;padding:16px 14px 90px}
+h1{font-size:1.35rem;color:var(--navy);margin-bottom:4px}
+h2{font-size:1.1rem;color:var(--navy);margin:18px 0 8px}
+h3{font-size:1rem;color:var(--navy);margin:12px 0 6px}
+p{margin-bottom:8px}
+.sub{color:var(--muted);font-size:.9rem;margin-bottom:12px}
+.code{display:inline-block;background:var(--soft);color:var(--blue);font-weight:800;font-size:.75rem;padding:2px 8px;border-radius:999px;margin-bottom:6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.note{background:#FFF8E6;border:1px solid #F1D48A;border-radius:12px;padding:12px;font-size:.92rem;margin-bottom:12px}
+.info{background:var(--soft);border-left:4px solid var(--blue);border-radius:8px;padding:10px 12px;font-size:.92rem;margin-bottom:12px}
+.warn{background:#FDECEF;border-left:4px solid var(--rose);border-radius:8px;padding:10px 12px;font-size:.92rem;margin:8px 0}
+.ok{background:#E9F6F2;border-left:4px solid var(--green);border-radius:8px;padding:10px 12px;font-size:.92rem;margin:8px 0}
+label{display:block;font-weight:600;color:var(--navy);font-size:.92rem;margin:12px 0 4px}
+.hint{font-size:.8rem;color:var(--muted);margin:-2px 0 4px}
+textarea,input[type=text]{width:100%;border:1px solid #CBD5E1;border-radius:10px;padding:10px;font-size:1rem;font-family:inherit;background:#fff}
+textarea{min-height:68px;resize:vertical}
+.btn{display:inline-block;border:none;border-radius:10px;padding:11px 16px;font-size:.95rem;font-weight:700;cursor:pointer;text-decoration:none;text-align:center}
+.btn-p{background:var(--navy);color:#fff}
+.btn-s{background:#fff;color:var(--navy);border:1px solid #CBD5E1}
+.btn-g{background:#25A55F;color:#fff}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.chips button{border:1px solid #CBD5E1;background:#fff;padding:8px 12px;border-radius:999px;font-weight:600;color:var(--navy);cursor:pointer;font-size:.9rem}
+.chips button.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.reason{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-bottom:6px}
+.cs{display:flex;gap:4px}
+.cs button{border:1px solid #CBD5E1;background:#fff;border-radius:8px;padding:8px 10px;font-weight:800;color:var(--navy);cursor:pointer;font-size:.85rem}
+.cs button.on{background:var(--gold);border-color:var(--gold);color:#fff}
+.count{display:flex;gap:10px;margin-top:10px}
+.count div{flex:1;background:var(--soft);border-radius:10px;padding:10px;text-align:center}
+.count b{display:block;font-size:1.4rem;color:var(--navy)}
+.count span{font-size:.78rem;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:.86rem;margin:8px 0}
+th{background:var(--navy);color:#fff;text-align:left;padding:7px}
+td{border-bottom:1px solid var(--line);padding:7px;vertical-align:top}
+.three{display:grid;gap:8px}
+.three .c{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff}
+.three .c b{color:var(--navy)}
+.check{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}
+.check:last-child{border-bottom:none}
+.yn{display:flex;gap:4px;flex:0 0 auto}
+.yn button{border:1px solid #CBD5E1;background:#fff;border-radius:8px;padding:7px 10px;font-weight:700;color:var(--navy);cursor:pointer;font-size:.85rem}
+.yn button.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.role{border:2px solid var(--gold);border-radius:14px;padding:14px;background:#FFFCF3}
+.role h3{margin-top:0}
+.small{font-size:.82rem;color:var(--muted)}
+pre.out{white-space:pre-wrap;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;font-family:inherit;font-size:.86rem;max-height:340px;overflow:auto}
+.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 16px;border-radius:999px;font-size:.9rem;display:none;z-index:50}
+.emap{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0}
+.emap .q{border-radius:12px;padding:10px;border:1px solid var(--line)}
+.emap .q.pos{background:#EEF2F8}
+.emap .q.int{background:#FFF8E6}
+.emap .q h4{font-size:.9rem;color:var(--navy);margin-bottom:2px}
+.emap .q .t{font-size:.72rem;font-weight:800;letter-spacing:.04em;margin-bottom:4px}
+.emap .q.pos .t{color:var(--blue)}
+.emap .q.int .t{color:var(--gold)}
+.emap textarea{min-height:70px;font-size:.92rem}
+.prog{height:6px;background:var(--soft);border-radius:999px;overflow:hidden;margin:6px 0 2px}
+.prog div{height:100%;background:var(--green)}
+
+</style>
+<style>
+.sem{display:flex;gap:4px}
+.sem button{border:1px solid #CBD5E1;background:#fff;border-radius:8px;padding:7px 10px;font-weight:800;cursor:pointer;font-size:.8rem}
+.sem button.v.on{background:#2E7D4F;color:#fff;border-color:#2E7D4F}
+.sem button.a.on{background:#C98A12;color:#fff;border-color:#C98A12}
+.sem button.r.on{background:#B23A3A;color:#fff;border-color:#B23A3A}
+.priv{border:2px dashed var(--rose);border-radius:14px;padding:14px;background:#FFF7F9}
+.dcard{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff;margin-bottom:10px}
+.dcard .t{font-weight:700;color:var(--navy);margin-bottom:6px}
+.two{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:640px){.two{grid-template-columns:1fr 1fr}}
+.bigq{font-size:1.05rem;font-style:italic;color:var(--navy);border-left:4px solid var(--gold);padding:6px 12px;margin:10px 0}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><div class="brand">MBA · Liderazgo y Dirección de Equipos e Individuos<br><span style="color:var(--gold)">Albeiro Herrera C.</span></div><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAA7BAMAAADMcNgaAAAAMFBMVEVVbaB1iLE0Uo6aqcfGzuAfP4H+/v7P1uTm6fGrt9AiQoSLm726xNjDzN3c4euXpsWx0Bb5AAAAEHRSTlP/////////////////////zSGylAAACYxJREFUeNrFmHt0E2Uaxp9vkubWS2ZS26aptpMUaBGUQGHXw+6Bel0OLhLUtoAeOlwsaIWmVSwuIqEiN10aYClgXUhBRHShAde9HI9L2KMLLiuNImytbjsFgbaUZkKbS5N2Zv9I0BThD6Bg/ppz5sn8vnnneb/nnSEluPU/Cj8DhLodkLLTtwFCzLcBUjfrFkDkVzBfC996CP18JuO5xeUiXQoI9JUaxabRPxybsXkYC1BmAJBtQTIHIC1GPAaqvwBAv+UaEDI618DZmCshYefwy3agqtR9Pgsg2QAAo9HmBGCKEa9CMAAA8mtBVLzk2UDOslc67vVdVrAAUCg+dmniWTtYyQIWkDdCQwM48sOVWEwCpQALDL1Wufo/fcDw0B15PykXEjBusWnvZObhpJ3aUwZucWmqQ10avbt9k+kCgyWjouhxzYiUxcY62aOCupRbWnYtSLjy3gmtXzz5kwcXNv5z4YvrQwcOJfQovOt498iX+iAttUZOJnzsONlu0aytnCs8krKwBcoTtLQk/95nrwYhOoAMXXGoKdPHg2JiSxZSTHhH7BfkGhsQAkAkyY/wqMtngyD9SkY6I0e9UAuwPMK5dFB2FYheX8ajb0dSO3EsB7QVuliKtJVELwgAkeOir4CQCX4eAHDGgGW/YXFuoRkAihqvZmFKF0psyYFckfzy1goapOwPgvdHk0kSemVxZsnPqVhJ4qTiMJPOogKQ2ub/Df4EFGMjr63UgZvLQCGM7kCFoNb/BBKXNV93NEyLr3BKFx4BbM/G+phKYGE7NkYwsVafr1pV7VhQFZe2N/MS8PSYT6gOQ1s9fUEIrM+UeNfHX3aen1Oz13RpxrJgjD0joXVfx8Q67VTHaqG2zP5lpomzzdpJdw12x38uHC4nwBtvzfOTHfC8Puq9lUmDt63I8gBKG4RB+5G8MXjX+K/vn0SCtN7PJByCsn8Q70SiYUr6cg6lYE/fz29/WyAz++jv6qmIlwYLorhITfCIn4id3Utsrb2BnPL9Zx7L9Cio0ewglmv5sUpnd9pjvO/Fusr8uIxjR/oW29vva7vLLwQH7U5oQdw9yeY6MCu8wbNcd2qfPv2SkzYVa8XTtC2qKmfKAWx2YzXDAKvTjK1MZSWDRUwawwI5TBoNqAtYII2xgZSXA4oCegBE5WSmOOPY1q1azkham5ipTnJOkByaS5nn7VHRr/LuA8ioF3AybyxwIrvnTF529nD8Oi/7jbd4PJh3wgbEe5zAC2cOQ5U3Eujx2AdA2n2pm+NtGw2PTrO7V25JfmDb1Hnuxx/yeLqStEJEJE7FeUCOAHZjGVBXcsFNSkoEFOOlZzpmo4YrsgIuuIHKSb1sYMkLQAXeGwCRfjte29Uun2c8aNO/kr1oyHTv+6YsdxMxdd85oLK+BRqbxK0GjJFF8gAg2UMAFAAauDoAr66zgwMw0UoGuuuTj0IVWW8KqxQfqeb9z9qUbuKC9qZh8JPmARBzA2jYvUCSGwAQcUWuFA2dfloOIBGJAEClOr0DIFTy48zKB8R6dbBz+ts642d/Pemo8OpImcb32gDIUhVo/EvDYWkkZDIBAI3RFftopw9A2KGkAZCWrRo6FrLi4VoyW+v1mqZ5t3Q1Nze1P1dxOKWwfU+nelHspEfdKdn2QIt8kg1gccEBDgCIVRE5bXTVaDgAdTY7gIBTQn4MRLVvTdeikONpzHSLAm0yscRfg5CLCg89LQViIMoWUeiBhLpQIwBboQAgqNmVGg2vJHs8LADCXC2AKlcCrDEQyQ3pyCFGTjp5awXFgyL7E+HtTW0eJ+LbGIg34wOBIGiVExeA+IJZAFTn6TeiVq34YHdQBwCNajOgr90VXhUDIYDKEMfFDdnRw4tdYnNzs/c7fqwyhK0D21a3cf97KjNcvvWOyGhjA6BdIEUWTIZ31K9ZAQDrglsBZUf9M74YSMgGqSwsLjRnlQ61Q2YDUS+V8yGe1cU60IEJH+75O6xYpTkUbR6lBcB5jIlMot+W7rEHACCkd4LcU7rHqmZ/vIBopwwTdVVjD7a61oGafy9EXUdpqSWTSQIimSKzAzxmAH3YCXUw6lmIHIB+6zYAIfgEwBUx1LsWhBqBc6BjVmkVW1uLtb1tbQ0C5OMvAs3bXl1u8xZylzV+HRMQ1LsA2GSQ1iwAKNZXUpIDHYI4qt5IQLHj3YAfDtNKFqolSD8IGFER2ydgU2qIQKlY1RpN4WajETCBRe9GxhZZS5J+fwrIk2b87lSBWbQ7gfRz3Nixi2zVhd306sLk4f6iAyUPgnIUds9/0gpxP13zBDCqUBaT8co3HQ0pvcJQ73MruFGl42b8voOkqYuq4z32nVMi23DudFvMLHv9+z8pQX+yP0PwQPH0dlXS5NpxX5mPm/waj0cniKkhYbDyRO2Njw5svXBJEM0Q1c2AInOYRhi0l6AwYxm6FuijAVSe/kdePUiA5SGo4R28jJfELJoDUM9Cmb76wi9ZtGgoE0JT+jMH8XVOx797AYClmsRVCR6luSG1ucoB+h3r+ogmJf+mECtzSAkAlXb2GlDcdmIUeVDFO5ITKZFn4BWjG+xNPhqPHADUCR5AckPp0QIKN178po6hrBsyIxM7WgZjJJIVj4hrDA7nDd1PXWyDVvn8XImIqoYkzh0cvLkrbkSmYchnnX2e/otBAYFOV6InrX1B9se7Xj4SSVbzXWdj/qIe2Xb9EKPYfvepzYT1AMLl6qf2u04k5hwvOQoAsrv/W/NDRrKCtuX6LazM5+YVOGCbzZpScwGojKOriKBCaO39oUgkhGdezAUDMBylwyaIN9An4bgdtZ+C2E9fmlqZb6L06jlzqtMyPqfxR2fqwYgoN6ctrsqZYbDMSJ/jH5ZruX6ISCuK3qIVLGvZMPNos9jm2fSOd2qLg8sFPc0QES2bzT6zUEafEh49NSHYdPwGIEjQO83B+Fb71/z4OQDATm59vyig40e29h6PQl76woWdEyk6rKSg3ngj24rt+8Y6PaGz/rODmwAAvHIzeX9tg367WB0VNSMpH9M3/Nuq6BXBlN0IROyCyOvpuNTv13BKWqHzfTNCKlgC/kfNrmf9G/Jk2i/Mf37OfocwjbqRPgGAO8amnOyW6ZI9weKeY5u+ajzWEtOIBSQgC7L0+JcVE/80peNhVeD6QytKm8vs5akMOcqsoMp2XyWuntj34ZSb/N4lmbfxyLqzvOewHqL9qavsib/4ZtnNflQTOwQA96zvPBsCpOqrSCtz3DcIIbfjC/f/AZx8mlenXiWJAAAAAElFTkSuQmCC" alt="Pontificia Universidad Javeriana Bogotá" style="height:34px;width:auto"></div>
+  <div class="who" id="who">Sesión 8 · Liderando a otros</div>
+  <nav id="nav"></nav>
+</header>
+<main id="main"></main>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------- estado ---------- */
+let S={};
+try{S=JSON.parse(localStorage.getItem('kitS8')||'{}')}catch(e){S={}}
+function save(){try{localStorage.setItem('kitS8',JSON.stringify(S))}catch(e){}}
+function v(k,d=''){return S[k]!==undefined?S[k]:d}
+function setv(k,val){S[k]=val;save()}
+function esc(t){return String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(()=>t.style.display='none',2200)}
+function ta(k,label,ph='',hint=''){return `<label>${label}</label>${hint?`<div class="hint">${hint}</div>`:''}<textarea data-k="${k}" placeholder="${esc(ph)}">${esc(v(k))}</textarea>`}
+function tx(k,label,ph='',hint=''){return `<label>${label}</label>${hint?`<div class="hint">${hint}</div>`:''}<input type="text" data-k="${k}" placeholder="${esc(ph)}" value="${esc(v(k))}">`}
+function chips(k,opts,multi=false){
+ const cur=v(k,multi?[]:'');
+ return `<div class="chips" data-chips="${k}" data-multi="${multi?1:0}">${opts.map(o=>{const on=multi?cur.includes(o):cur===o;return `<button type="button" data-o="${esc(o)}" class="${on?'on':''}">${esc(o)}</button>`}).join('')}</div>`}
+function bindAll(root){
+ root.querySelectorAll('[data-k]').forEach(el=>{el.addEventListener('input',()=>{setv(el.dataset.k,el.value);nav()})});
+ root.querySelectorAll('[data-chips]').forEach(box=>{
+  const k=box.dataset.chips,multi=box.dataset.multi==='1';
+  box.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+   const o=b.dataset.o;
+   if(multi){let a=v(k,[]).slice();a=a.includes(o)?a.filter(x=>x!==o):a.concat(o);setv(k,a)}
+   else setv(k,v(k)===o?'':o);
+   render(true)})})
+}
+async function copyText(txt){try{await navigator.clipboard.writeText(txt);toast('Copiado')}catch(e){toast('No se pudo copiar: selecciona el texto a mano')}}
+function waLink(txt){return 'https://wa.me/?text='+encodeURIComponent(txt)}
+function f(k){return (v(k)||'').trim()}
+function P(){return v('modo')==='Pertenezco'}            /* liderazgo sin autoridad */
+function M(lid,per){return P()?per:lid}
+
+/* ---------- radiografía ---------- */
+const NIV=[
+ ['C','Confianza','Ausencia de confianza: nadie se muestra vulnerable'],
+ ['F','Conflicto','Temor al conflicto: armonía artificial'],
+ ['M','Compromiso','Falta de compromiso: ambigüedad y decisiones que no se sostienen'],
+ ['A','Responsabilidad','Evasión de la responsabilidad entre pares'],
+ ['R','Resultados','Desatención a los resultados del equipo']];
+const ITEMS=[
+ ['C',0,'En mi equipo alguien puede decir "me equivoqué" o "no sé" sin pagar un costo.'],
+ ['F',1,'Las reuniones terminan con acuerdos que alguien después cuestiona en el pasillo.'],
+ ['A',1,'Cuando alguien no cumple, quien lo señala es el jefe, no los compañeros.'],
+ ['R',0,'Cada persona conoce las metas del equipo y sabe si las estamos cumpliendo esta semana.'],
+ ['C',0,'Las personas piden ayuda a sus compañeros antes de que el problema crezca.'],
+ ['F',0,'En las reuniones se discuten de frente los temas difíciles, aunque incomoden.'],
+ ['M',0,'Al salir de una reunión, todos podrían repetir lo mismo sobre qué se decidió y quién hace qué.'],
+ ['A',1,'Hay personas a las que nadie les reclama, aunque no cumplan.'],
+ ['R',1,'Algunos cuidan más los resultados de su área o su imagen que los del equipo.'],
+ ['C',1,'Se ocultan errores o debilidades para no quedar mal.'],
+ ['F',1,'Se evitan los desacuerdos para mantener el buen ambiente.'],
+ ['M',1,'Las decisiones se postergan esperando más información o que todos estén de acuerdo.'],
+ ['A',0,'Los compañeros se dicen entre ellos cuando algo no está bien hecho.'],
+ ['R',0,'Los logros que se celebran son los del equipo, no los individuales.'],
+ ['M',0,'Una vez se toma una decisión, todos la apoyan, aunque no estuvieran de acuerdo.']];
+function perfil(){
+ const s={};NIV.forEach(([k])=>s[k]=[]);
+ ITEMS.forEach((it,i)=>{const r=+v('r'+i,0);if(r)s[it[0]].push(it[1]?6-r:r)});
+ const out={};NIV.forEach(([k])=>{const a=s[k];out[k]=a.length?Math.round(a.reduce((x,y)=>x+y,0)/a.length*10)/10:null});
+ return out}
+function nRad(){return ITEMS.filter((_,i)=>+v('r'+i,0)).length}
+function rompe(){const p=perfil();for(const [k] of NIV){if(p[k]!==null&&p[k]<3.5)return k}
+ let min=null;NIV.forEach(([k])=>{if(p[k]!==null&&(min===null||p[k]<p[min]))min=k});return min}
+function nivName(k){const n=NIV.find(x=>x[0]===k);return n?n[1]:''}
+
+/* ---------- pecera ---------- */
+const CASOS={
+ r1:{t:'Ronda 1 · El recorte',
+  comun:`<p><b>Alimentos Cordillera</b> (empresa ficticia) procesa y distribuye alimentos en cuatro regionales. La junta pidió <b>recortar 18 % del presupuesto de gastos: 4.100 millones de pesos</b> en el próximo año.</p>
+  <p>Sobre la mesa está la propuesta del presidente: <b>cerrar la regional Caribe</b>, que ahorra exactamente 4.100 millones y supone 46 despidos.</p>
+  <p>Ustedes tres son el comité de gerentes. Tienen <b>10 minutos</b> para acordar la recomendación que llevarán a la junta mañana.</p>`,
+  roles:{
+   ROBLE:{n:'Gerente de Operaciones',pub:'Tiende a no contradecir a Finanzas en público. Le preocupa el equipo del Caribe, pero no quiere parecer el que frena el recorte.',sec:'Tiene una alternativa estudiada: consolidar dos centros de distribución y renegociar fletes ahorra 2.600 millones sin despidos. Sumada a congelar contrataciones (900 millones) y recortar viajes y eventos (700 millones), llega a 4.200 millones.',cuando:'alguien le pregunte por alternativas o por costos de operación'},
+   CEIBA:{n:'Gerente Financiero',pub:'Defiende el cierre: en el papel es limpio, cuadra exacto y se ejecuta rápido.',sec:'Sabe que la regional Caribe aporta entre 3.100 y 4.700 millones al año de contribución. Cerrarla ahorra 4.100 en gastos, pero puede costar casi lo mismo, o más, en margen perdido.',cuando:'alguien le pregunte cuánto aporta el Caribe o qué pasa con los ingresos si se cierra'},
+   GUAYACAN:{n:'Gerente Comercial',pub:'Se opone al cierre porque perdería clientes clave, pero no tiene números para sostenerlo.',sec:'El presidente de la junta le dijo en privado que el 18 % puede lograrse en 18 meses, no en 12, si el comité presenta un plan creíble.',cuando:'alguien le pregunte por los plazos o por lo que piensa la junta'}}},
+ r2:{t:'Ronda 2 · La fecha de salida',
+  comun:`<p><b>Nutrimax</b> (empresa ficticia) lanza una línea de bebidas en una cadena nacional de supermercados. El lanzamiento está anunciado para <b>el lunes en 120 tiendas</b>, con campaña de medios ya pagada.</p>
+  <p>Ustedes tres son el equipo de lanzamiento. Tienen <b>10 minutos</b> para decidir: <b>lanzar el lunes completo, lanzar parcial o aplazar</b>, y quién hace qué.</p>`,
+  roles:{
+   CONDOR:{n:'Gerente Comercial',pub:'Insiste en lanzar el lunes: la cadena y la campaña no esperan.',sec:'Para cerrar el negocio le prometió al comprador de la cadena un descuento de lanzamiento del 8 % que nadie aprobó.',cuando:'alguien le pregunte por las condiciones comerciales o el precio pactado'},
+   COLIBRI:{n:'Gerente de Operaciones',pub:'Dice "estamos listos". No quiere quedar como el que retrasa el lanzamiento.',sec:'El proveedor de envases falló la última entrega. Hoy hay inventario para 70 de las 120 tiendas.',cuando:'alguien le pregunte por el inventario o por los proveedores'},
+   TUCAN:{n:'Gerente Financiero',pub:'Neutral. Le preocupa el margen y que la campaña ya está pagada.',sec:'La junta acepta hasta dos semanas de retraso sin penalidad, y el contrato con la cadena permite reprogramar con 72 horas de aviso.',cuando:'alguien le pregunte por el contrato o por los plazos que acepta la junta'}}}
+};
+function rolBy(code){const c=(code||'').toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^A-Z]/g,'');
+ for(const r of ['r1','r2']){if(CASOS[r].roles[c])return {r,c,...CASOS[r].roles[c]}}return null}
+
+/* ---------- vistas ---------- */
+const VIEWS=[['inicio','8.0 · Inicio'],['rad','8.1 · Radiografía'],['pir','8.2 · Pirámide'],['pec','8.3 · Pecera'],['per','8.4 · Pérdida'],
+ ['coach','8.5 · Coaching'],['dist','8.6 · A distancia'],['plan','8.7 · Plan'],['ficha','8.8 · Ficha'],['inf','Para mi Informe']];
+const DONE={
+ inicio:()=>f('nombre')&&v('modo')&&v('trio'),
+ rad:()=>nRad()===15,
+ pir:()=>f('p_alimento')&&f('p_conducta_'+(rompe()||'C')),
+ pec:()=>f('o_frase'),
+ per:()=>f('pe_cambio')&&f('pe_oculto'),
+ coach:()=>f('co_rol')&&f('co_llevo'),
+ dist:()=>f('ri_1'),
+ plan:()=>f('a1_que')&&f('a1_met'),
+ ficha:()=>f('fa_apr')&&f('fa_bp')
+};
+let cur='inicio';
+function nav(){const n=document.getElementById('nav');
+ n.innerHTML=VIEWS.map(([id,l])=>`<button data-v="${id}" class="${cur===id?'on':''} ${DONE[id]&&DONE[id]()?'done':''}">${l}</button>`).join('');
+ n.querySelectorAll('button').forEach(b=>b.onclick=()=>go(b.dataset.v))}
+function go(id){cur=id;try{history.replaceState(null,'','#'+id)}catch(e){};render();window.scrollTo(0,0)}
+function next(id,label){return `<div class="row"><button class="btn btn-p" data-go="${id}">${label} →</button></div>`}
+let hooks=[];
+function render(keepScroll){
+ const y=window.scrollY,m=document.getElementById('main'),name=f('nombre');
+ document.getElementById('who').textContent=name?`Sesión 8 · ${name}`:'Sesión 8 · Liderando a otros';
+ nav();
+ const fn={inicio:vInicio,rad:vRad,pir:vPir,pec:vPec,per:vPer,coach:vCoach,dist:vDist,plan:vPlan,ficha:vFicha,inf:vInf}[cur]||vInicio;
+ m.innerHTML=fn();bindAll(m);
+ m.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+ hooks.forEach(h=>h());hooks=[];
+ if(keepScroll)window.scrollTo(0,y)}
+
+function vInicio(){
+ const done=Object.keys(DONE).filter(k=>DONE[k]()).length,tot=Object.keys(DONE).length;
+ return `<span class="code">8.0 · 6:00</span><h1>Liderando a otros</h1>
+ <p class="sub">Sesión 8 · miércoles 18 de noviembre de 2026 · Del equipo al sistema</p>
+ <div class="bigq">¿Mi equipo funciona como funciona por cómo lo lidero yo?</div>
+ <div class="card"><h3>Lo que van a hacer hoy</h3><p>Toda la noche trabajan sobre <b>un solo equipo real</b>: lo radiografían, encuentran dónde se rompe, ven a otro equipo funcionar desde afuera, trabajan la resistencia al cambio y a la persona que más les cuesta, y salen con un plan que sustentan en la Sesión 9.</p></div>
+ ${tx('nombre','Su nombre','Para que su documento salga con su nombre')}
+ <label>Su trío (lo asigna el profesor)</label>${chips('trio',['A','B','C'])}
+ <div class="card"><h3>El equipo que va a trabajar</h3>
+ <label>Con ese equipo, yo…</label>${chips('modo',['Lidero','Pertenezco'])}
+ <div class="hint" style="margin-top:6px">"Pertenezco" si no tiene equipo a cargo: trabajará el equipo del que hace parte y cómo moverlo sin autoridad formal. El kit ajusta las preguntas.</div>
+ ${tx('eq_que','Qué equipo es','Ej.: equipo de planeación financiera, 6 personas')}
+ ${ta('eq_roles','Roles que lo componen (sin nombres)','Ej.: 2 analistas, 1 coordinadora, 1 practicante…')}</div>
+ <div class="card"><h3>Reporte del compromiso de la Sesión 7</h3><p class="small">Solo el primer intento. El balance completo va al Informe de Gestión.</p>
+ ${chips('s7_hice',['Lo intenté','Lo intenté a medias','No lo intenté'])}
+ ${ta('s7_paso','Qué hice y qué pasó (o qué me frenó)','30 segundos en voz alta')}</div>
+ <div class="note"><b>Regla de la noche:</b> se habla del equipo por roles, <b>nunca por nombres</b>. Lo que se dice aquí se queda aquí.</div>
+ <div class="info">Lo que escriba se guarda <b>solo en este dispositivo</b>, aunque se vaya la conexión.</div>
+ <div class="card"><h3>Su avance</h3><div class="prog"><div style="width:${Math.round(done/tot*100)}%"></div></div><p class="small">${done} de ${tot} secciones con lo esencial completo</p></div>
+ ${next('rad','8.1 · Radiografía')}`}
+
+function vRad(){
+ return `<span class="code">8.1 · 6:07 · 7 min</span><h1>Radiografía de mi equipo</h1>
+ <p class="sub">15 afirmaciones sobre ${f('eq_que')?'<b>'+esc(f('eq_que'))+'</b>':'su equipo'}. Responda por lo que pasa, no por lo que debería pasar.</p>
+ <div class="info">1 = nada cierto · 5 = totalmente cierto. Su perfil se calcula, pero no se muestra hasta que el profesor presente el modelo.</div>
+ ${ITEMS.map((it,i)=>`<div class="dcard"><div class="t" style="font-weight:600">${i+1}. ${it[2]}</div><div class="cs" data-chips="r${i}" data-multi="0">${[1,2,3,4,5].map(n=>`<button type="button" data-o="${n}" class="${String(v('r'+i))===String(n)?'on':''}">${n}</button>`).join('')}</div></div>`).join('')}
+ <p class="small">${nRad()} de 15 respondidas.</p>
+ <div class="card"><h3>Banco anónimo (en papel)</h3><p>En un post-it, en mayúsculas y sin nombres: <b>"Lo que en mi equipo nadie dice en voz alta es ___"</b>. Dóblelo y échelo a la bolsa.</p></div>
+ ${next('pir','8.2 · Pirámide')}`}
+
+function bars(){const p=perfil(),rk=rompe();
+ return `<div class="card"><h3>Mi perfil</h3><p class="small">De abajo hacia arriba, como la pirámide. Se rompe primero el nivel más bajo con menos de 3,5.</p>
+ ${NIV.slice().reverse().map(([k,n])=>{const s=p[k];return `<div style="margin:8px 0"><div style="display:flex;justify-content:space-between;font-size:.9rem"><b style="color:var(--navy)">${n}${k===rk?' · aquí se rompe':''}</b><span>${s===null?'—':String(s).replace('.',',')}</span></div><div class="prog" style="height:10px"><div style="width:${s?s/5*100:0}%;background:${k===rk?'var(--rose)':'var(--green)'}"></div></div></div>`}).join('')}</div>`}
+function vPir(){
+ const rk=rompe(),show=v('revela');
+ if(!show){hooks.push(()=>{document.getElementById('rev').onclick=()=>{setv('revela',1);render()}})}
+ return `<span class="code">8.2 · 6:20 · 40 min</span><h1>Mi equipo en la pirámide</h1>
+ <div class="card"><h3>Las cinco disfunciones (Lencioni)</h3><p class="small">Cada nivel se apoya en el de abajo. En un equipo sano, la responsabilidad la exigen los <b>pares</b>, no solo el jefe.</p>
+ <table><tr><th>Nivel</th><th>Cuando falla</th></tr>${NIV.slice().reverse().map(([k,n,d])=>`<tr><td><b>${n}</b></td><td>${d}</td></tr>`).join('')}</table></div>
+ ${show?bars():`<div class="row"><button class="btn btn-p" id="rev">Mostrar mi perfil</button></div><p class="small">Tóquelo cuando el profesor lo indique.</p>`}
+ ${nRad()<15?`<div class="warn">Le faltan ${15-nRad()} respuestas en 8.1 para que el perfil sea completo.</div>`:''}
+ <div class="card"><h3>Galería</h3><p>Pase al frente y marque en el pliego el nivel donde <b>se rompe primero</b> su equipo${rk?`: <b>${nivName(rk)}</b>`:''}.</p></div>
+ <div class="card"><h3>Diagnóstico (10 min)</h3><p class="small">Una conducta observable del último mes por nivel. Hechos, no adjetivos.</p>
+ ${NIV.map(([k,n])=>tx('p_conducta_'+k,n+(k===rk?' · donde se rompe':''),'Ej.: en la reunión del lunes nadie dijo que el plazo era imposible')).join('')}
+ ${ta('p_alimento',M('¿Qué hago yo que alimenta lo que pasa en el nivel donde se rompe mi equipo?','¿Qué hago yo, como miembro del equipo, que alimenta lo que pasa en el nivel donde se rompe?'),'')}
+ ${ta('p_rol','¿Qué capacidad o rol le falta a mi equipo?','Ej.: alguien que cuestione, alguien que cierre, alguien que mida')}</div>
+ <div class="card"><h3>Cruce con las sesiones 5 y 6</h3>
+ ${ta('p_360','Lo que dice mi 360° de observador (o mi mapa de brecha de la S5)','')}
+ ${ta('p_estilo','¿Qué estilo mío sobra o falta en el nivel donde se rompe mi equipo?','')}
+ ${ta('p_filtro','El filtro de la S6: ¿a quién de mi equipo se lo aplico?','Rol, sin nombre')}</div>
+ <div class="card"><h3>Defienda a su equipo (12 min)</h3>
+ <p class="small">Usted presenta su diagnóstico en 2 minutos. Su compañero habla 2 minutos como vocero de su equipo: "${M('Lo que nuestro jefe no ve es…','Lo que nuestro compañero no ve es…')}". Usted solo responde: "Gracias. Lo que me llevo es…".</p>
+ ${ta('p_vocero','Lo que dijo el vocero de mi equipo','')}${ta('p_llevo','Lo que me llevo','')}</div>
+ ${next('pec','8.3 · Pecera')}`}
+
+function rolCard(rol){return `<div class="role"><span class="code">${rol.r==='r1'?'Ronda 1':'Ronda 2'}</span><h3>Usted es: ${rol.n}</h3>
+ <p><b>Su postura en la reunión:</b> ${rol.pub}</p>
+ <div class="priv" style="margin:8px 0"><b>Dato secreto:</b> ${rol.sec}</div>
+ <p class="small"><b>No ofrezca este dato.</b> Solo lo revela si ${rol.cuando}. Si le preguntan, responda con la verdad.</p></div>`}
+function vPec(){
+ const rol=rolBy(v('codigo'));
+ hooks.push(()=>{document.getElementById('verRol').onclick=()=>render(true)});
+ return `<span class="code">8.3 · 7:00 · 40 min</span><h1>La pecera</h1>
+ <p class="sub">Un trío decide en la tarima. Los demás observan los cinco niveles. Dos rondas, dos casos.</p>
+ <div class="two">${['r1','r2'].map(r=>`<div class="card"><h3 style="margin-top:0">${CASOS[r].t}</h3>${CASOS[r].comun}</div>`).join('')}</div>
+ <div class="card"><h3>Si usted juega</h3>
+ ${tx('codigo','Código de su rol','El que le entregó el profesor en el post-it')}<div class="row"><button class="btn btn-s" id="verRol">Ver mi rol</button></div>
+ ${rol?rolCard(rol):(f('codigo')?'<div class="warn">Ese código no existe. Revise el post-it.</div>':'')}</div>
+ <div class="card"><h3>Si usted observa</h3>
+ ${tx('o_quien','A quién observo (el cargo)','Ej.: Gerente Financiero')}
+ ${ta('o_frase','Frases o actos literales de esa persona','Solo hechos, sin adjetivos: "dijo…", "se calló cuando…"')}
+ <label>¿En qué nivel se vio mejor o peor ese equipo?</label>${chips('o_nivel',NIV.map(x=>x[1]),true)}
+ <label>¿Qué datos secretos salieron?</label>${chips('o_datos',['Alternativa / inventario','Contribución del Caribe / descuento prometido','Plazo de la junta / contrato','Ninguno'],true)}
+ ${ta('o_rolfalto','¿Qué rol faltó en ese equipo?','')}
+ ${v('trio')==='C'?ta('o_regla','Como consultor: la regla que habría cambiado el resultado',''):''}</div>
+ <div class="card"><h3>Trío B · Nuestras tres reglas (antes de la ronda 2)</h3>
+ ${tx('reg1','Regla 1','')}${tx('reg2','Regla 2','')}${tx('reg3','Regla 3','')}</div>
+ ${ta('pec_alto','Lo que hace distinto a un equipo de alto desempeño, en una frase mía','')}
+ ${next('per','8.4 · La pérdida')}`}
+
+const PERD=['Estatus','Competencia','Certeza','Relaciones','Identidad','Autonomía'];
+function vPer(){
+ return `<span class="code">8.4 · 7:55 · 25 min</span><h1>La pérdida que nadie nombra</h1>
+ <div class="info">La gente no resiste el cambio: resiste la pérdida que nadie le reconoce (Sesión 4).</div>
+ <div class="card">${ta('pe_cambio',M('Un cambio real que hoy le estoy pidiendo a mi equipo','Un cambio real que hoy vive mi equipo'),'Puede ser el de IA de anoche')}
+ ${tx('pe_quien','El colaborador o compañero que más lo resiste (rol)','')}</div>
+ <div class="card"><h3>Inversión de roles (12 min)</h3>
+ <p class="small">1 min: le cuenta a su pareja el cambio. 4 min: su pareja anuncia el cambio y usted hace de esa persona, en primera persona: "Lo que yo pierdo con esto es…". 1 min: notas. Se invierten.</p>
+ <label>Lo que esa persona pierde</label>${chips('pe_pierde',PERD,true)}
+ ${ta('pe_dije','Lo que dije siendo esa persona','Frase literal')}</div>
+ <div class="card"><h3>Dos columnas (5 min)</h3>
+ ${ta('pe_oculto','¿Qué compromiso oculto protege mi equipo al resistirse?','Cuarta columna del mapa de inmunidad (Kegan y Lahey)')}
+ ${ta('pe_fabrico',M('¿Qué parte de esa resistencia fabrico yo: cómo lo anuncié, qué no pregunté, qué no reconocí?','¿Qué parte de la resistencia del equipo es mía?'),'Accountability sin culpa (Mark Samuel)')}</div>
+ ${next('coach','8.5 · Coaching')}`}
+
+function vCoach(){
+ return `<span class="code">8.5 · 8:20 · 50 min</span><h1>La persona que más me cuesta</h1>
+ <div class="card"><h3>Momento de tensión · de pie, 45 segundos</h3>
+ <div class="bigq">"La persona de mi equipo que más me cuesta ${M('liderar','influir')} es [rol], porque ___. Y lo que eso dice de mí es ___."</div>
+ ${tx('co_rol','Rol (nunca el nombre)','')}${ta('co_porque','Porque…','')}${ta('co_dice','Y lo que eso dice de mí es…','')}</div>
+ <div class="card"><h3>Coaching y mentoring</h3>
+ <table><tr><th></th><th>Mentoring</th><th>Coaching</th></tr>
+ <tr><td><b>Qué hace</b></td><td>Transfiere su experiencia</td><td>Hace que el otro piense</td></tr>
+ <tr><td><b>Habla más</b></td><td>El mentor</td><td>El coachee</td></tr>
+ <tr><td><b>Sirve cuando</b></td><td>El otro no sabe cómo</td><td>El otro puede encontrar el cómo</td></tr></table>
+ <p class="small">El coaching no necesita autoridad formal. Reglas de la S3: <b>prohibido aconsejar</b> y escucha en nivel 3 (empática).</p></div>
+ <div class="card"><h3>GROW (Whitmore)</h3>
+ <table><tr><th>Etapa</th><th>Preguntas</th></tr>
+ <tr><td><b>Meta</b></td><td>¿Qué quieres lograr con esa persona? ¿Cómo sabrás que lo lograste?</td></tr>
+ <tr><td><b>Realidad</b></td><td>¿Qué pasa hoy? ¿Qué has intentado? ¿Qué parte es tuya?</td></tr>
+ <tr><td><b>Opciones</b></td><td>¿Qué podrías hacer? ¿Qué más? ¿Qué harías si no tuvieras miedo?</td></tr>
+ <tr><td><b>Voluntad</b></td><td>¿Qué vas a hacer, cuándo? Del 1 al 10, ¿qué tan seguro estás?</td></tr></table>
+ <p class="small">Error típico: saltar de la realidad a las opciones demasiado rápido.</p></div>
+ <div class="priv"><h3 style="margin-top:0">Privado · mi dato no dicho</h3><p class="small">Antes de su ronda como coachee. Solo sale si una pregunta lo alcanza. Ejemplos: "Yo también evito a esa persona en las reuniones". "Esa persona aspiraba a mi cargo".</p>
+ ${ta('co_dato','Algo que no he dicho sobre esa persona o sobre mí','')}
+ <label>¿Apareció en la conversación?</label>${chips('co_aparecio',['Sí','No'])}</div>
+ <div class="card"><h3>Como observador</h3>
+ <label>Consejos disfrazados de pregunta ("¿No has pensado en…?")</label>${chips('ob_consejos',['0','1','2','3','4 o más'])}
+ <label>Etapa que se saltaron</label>${chips('ob_etapa',['Meta','Realidad','Opciones','Voluntad','Ninguna'],true)}
+ ${ta('ob_pregunta','La pregunta que hizo aparecer algo nuevo','')}</div>
+ <div class="card"><h3>Como coachee</h3>${ta('co_llevo','Lo que me llevo: mi siguiente paso con esa persona','')}
+ ${ta('co_mentor','El consejo que me habría dado como mentor, y por qué fue mejor no darlo','')}</div>
+ ${next('dist','8.6 · A distancia')}`}
+
+function vDist(){
+ const rk=rompe();
+ const niv=[1,2,3,4,5].map(i=>v('rn_'+i)).filter(Boolean);
+ const cubre=rk&&niv.includes(nivName(rk));
+ return `<span class="code">8.6 · 9:10 · 15 min</span><h1>Mi equipo a distancia</h1>
+ <div class="card"><h3>Tres principios</h3><ol style="padding-left:18px"><li>El trabajo tiene que verse sin pedirlo.</li><li>Los ritmos tienen que ser explícitos.</li><li>La confianza se construye cumpliendo lo pequeño.</li></ol></div>
+ <div class="card"><h3>Auditoría de rituales</h3><p class="small">Lo que hoy sostiene a su equipo: uno a uno, reunión semanal, chat, informes…</p>
+ ${[1,2,3,4,5].map(i=>`<div class="dcard"><input type="text" data-k="ri_${i}" placeholder="Ritual ${i}" value="${esc(v('ri_'+i))}">
+ <label>Qué nivel alimenta</label>${chips('rn_'+i,NIV.map(x=>x[1]))}<label>¿Funciona a distancia?</label>${chips('rd_'+i,['Sí','A medias','No'])}</div>`).join('')}
+ ${rk?(cubre?`<div class="ok">Tiene al menos un ritual para <b>${nivName(rk)}</b>, donde se rompe su equipo. ¿Funciona?</div>`:`<div class="warn">Ningún ritual trabaja <b>${nivName(rk)}</b>, el nivel donde se rompe su equipo.</div>`):''}</div>
+ <div class="card"><h3>De pie, en parejas</h3>
+ ${ta('di_entero','Si mañana mi equipo trabajara 100 % remoto, ¿cómo me enteraría de que la persona que más me cuesta está mal antes de que renuncie?','')}</div>
+ ${next('plan','8.7 · Plan')}`}
+
+const PULSO=['En este equipo puedo decir "me equivoqué" sin pagar un costo.','En las reuniones discutimos de frente los temas difíciles.','Salimos de las reuniones con claridad sobre qué se decidió y quién hace qué.','Entre compañeros nos decimos cuando algo no está bien hecho.','Ponemos los resultados del equipo por encima de los de cada área o persona.'];
+function pulsoText(){return `Pulso de equipo (anónimo, 2 minutos)\nResponda de 1 (nada cierto) a 5 (totalmente cierto):\n${PULSO.map((p,i)=>`${i+1}. ${p}`).join('\n')}\n6. ¿Qué debería empezar a hacer ${M('quien lidera este equipo','cada uno de nosotros')} para que funcionemos mejor?`}
+const TIPOS=['Ritual','Conversación de coaching','Reconocer la pérdida','Rol o conformación'];
+function planText(){
+ let t=`${M('Plan de acción de equipo','Plan de influencia en mi equipo')} · Sesión 8 · ${f('nombre')}\nEquipo: ${f('eq_que')}\nNivel a trabajar: ${v('pl_nivel')||nivName(rompe())}\n`;
+ [1,2,3].forEach(i=>{if(f('a'+i+'_que'))t+=`\nAcción ${i} (${v('a'+i+'_tipo')}): ${f('a'+i+'_que')}\n  Fecha: ${f('a'+i+'_fecha')} · Métrica: ${f('a'+i+'_met')} · Lo comprueba: ${f('a'+i+'_quien')}`});
+ t+=`\n\nPulso: ${v('pl_pulso')}`;return t}
+function vPlan(){
+ const n=v('pl_nivel')||nivName(rompe());
+ hooks.push(()=>{document.getElementById('cpP').onclick=()=>copyText(pulsoText());const b=document.getElementById('waPl');b.onclick=()=>{b.href=waLink(planText())}});
+ return `<span class="code">8.7 · 9:25 · 25 min</span><h1>${M('Plan de acción de mi equipo','Plan de influencia en mi equipo')}</h1>
+ ${P()?'<div class="info">Tres acciones que puede ejecutar <b>sin autoridad formal</b>, desde su silla.</div>':''}
+ <label>Nivel de la pirámide que voy a trabajar</label>${chips('pl_nivel',NIV.map(x=>x[1]))}
+ ${!v('pl_nivel')&&n?`<p class="small">Sugerido por su radiografía: <b>${n}</b>.</p>`:''}
+ ${[1,2,3].map(i=>`<div class="dcard"><div class="t">Acción ${i}${i===3?' (opcional)':''}</div>${chips('a'+i+'_tipo',TIPOS)}
+ ${ta('a'+i+'_que','Qué voy a hacer (conducta observable)','')}
+ <div class="two">${tx('a'+i+'_fecha','Fecha','')}${tx('a'+i+'_quien','Quién lo puede comprobar','')}</div>
+ ${tx('a'+i+'_met','Métrica','Ej.: el pulso sube de 2,3 a 3 en conflicto')}</div>`).join('')}
+ <div class="card"><h3>Pulso de remedición</h3>
+ <p class="small">Aplíquelo a su equipo real dos veces: <b>antes de la S9 (25 de noviembre)</b> y <b>antes de entregar el Informe (2 de diciembre)</b>. Con 4 personas o más, en un formulario anónimo. Con menos de 4, conviértalo en una conversación de equipo con las mismas preguntas.</p>
+ <pre class="out">${esc(pulsoText())}</pre><div class="row"><button class="btn btn-s" id="cpP">Copiar el pulso</button></div>
+ <label>¿Cómo lo voy a aplicar?</label>${chips('pl_pulso',['Formulario anónimo','Conversación de equipo'])}</div>
+ <div class="note"><b>Hot seat en el trío (3 min):</b> "¿Esto es conducta o intención?", "¿Cómo lo comprobaría un tercero?" y "¿Dónde está la persona que más te cuesta en este plan?"</div>
+ ${tx('testigo','Mi testigo','')}
+ <div class="row"><a class="btn btn-g" id="waPl" target="_blank" rel="noopener" href="#">Enviar mi plan al testigo por WhatsApp</a></div>
+ ${next('ficha','8.8 · Ficha')}`}
+
+function vFicha(){
+ return `<span class="code">8.8 · Cierre</span><h1>Ficha de aprendizaje</h1>
+ <div class="card">${ta('fa_apr','Un aprendizaje de esta sesión','')}${ta('fa_bp','Una buena práctica aplicable a mi organización','')}${ta('fa_comp','Un compromiso con fecha','Puede ser la acción 1 de su plan')}</div>
+ ${tx('palabra','Una palabra para cerrar','')}
+ <div class="info"><b>Sesión 9 · miércoles 25:</b> sustenta este plan en 6 minutos, con los primeros datos del pulso. Se abren los sobres de la Sesión 1.</div>
+ ${next('inf','Para mi Informe')}`}
+
+function L(label,val){return val?`${label}: ${val}\n`:''}
+function infText(){
+ const p=perfil();
+ let t=`SESIÓN 8 · LIDERANDO A OTROS · INSUMO PARA EL INFORME DE GESTIÓN\nLiderazgo y Dirección de Equipos e Individuos · MBA · Pontificia Universidad Javeriana\nEstudiante: ${f('nombre')}\n${L('Equipo',f('eq_que'))}${L('Mi relación con el equipo',v('modo'))}${L('Roles',f('eq_roles'))}`;
+ t+=`\n1. DIAGNÓSTICO\nPerfil de la radiografía (1 a 5): ${NIV.map(([k,n])=>`${n} ${p[k]===null?'—':String(p[k]).replace('.',',')}`).join(' · ')}\nDonde se rompe: ${nivName(rompe())}\n`;
+ NIV.forEach(([k,n])=>{t+=L('Conducta observable · '+n,f('p_conducta_'+k))});
+ t+=L('Lo que yo alimento',f('p_alimento'))+L('Capacidad o rol que falta',f('p_rol'))+L('Mi 360° / mapa de brecha',f('p_360'))+L('Estilo que sobra o falta',f('p_estilo'))+L('Filtro (S6)',f('p_filtro'))+L('Lo que dijo el vocero de mi equipo',f('p_vocero'))+L('Lo que me llevo',f('p_llevo'));
+ t+=`\n2. RESISTENCIA AL CAMBIO\n`+L('Cambio',f('pe_cambio'))+L('Pérdidas',(v('pe_pierde',[])||[]).join(', '))+L('Compromiso oculto del equipo',f('pe_oculto'))+L('Lo que fabrico yo',f('pe_fabrico'));
+ t+=`\n3. LA PERSONA QUE MÁS ME CUESTA\n`+L('Rol',f('co_rol'))+L('Porque',f('co_porque'))+L('Lo que dice de mí',f('co_dice'))+L('Mi siguiente paso',f('co_llevo'));
+ t+=`\n4. RITUALES\n`;[1,2,3,4,5].forEach(i=>{if(f('ri_'+i))t+=`- ${f('ri_'+i)} (${v('rn_'+i)||'—'}; a distancia: ${v('rd_'+i)||'—'})\n`});t+=L('A distancia',f('di_entero'));
+ t+=`\n5. `+planText()+`\n\n6. FICHA DE APRENDIZAJE\n`+L('Aprendizaje',f('fa_apr'))+L('Buena práctica',f('fa_bp'))+L('Compromiso con fecha',f('fa_comp'));
+ t+=`\n7. COMPROMISO DE LA SESIÓN 7 (primer intento)\n`+L('Estado',v('s7_hice'))+L('Qué pasó',f('s7_paso'));
+ return t}
+function docHtml(){const body=esc(infText()).replace(/\n/g,'<br>');
+ return `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><title>Sesión 8</title></head><body style="font-family:Calibri,Arial;font-size:11pt"><p><img src="data:image/png;base64,${LOGO}" width="200" height="59"></p><p style="color:#B8891C"><b>Albeiro Herrera C.</b></p>${body}</body></html>`}
+function vInf(){
+ hooks.push(()=>{
+  document.getElementById('cpAll').onclick=()=>copyText(infText());
+  document.getElementById('waAll').onclick=()=>{document.getElementById('waAll').href=waLink(infText().slice(0,3500))};
+  document.getElementById('dlDoc').onclick=()=>{const blob=new Blob(['﻿'+docHtml()],{type:'application/msword'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Sesion8_'+(f('nombre')||'estudiante').replace(/\s+/g,'_')+'.doc';document.body.appendChild(a);a.click();a.remove()};
+  document.getElementById('clr').onclick=()=>{const b=document.getElementById('clr');if(b.dataset.c){S={};save();toast('Kit borrado');go('inicio')}else{b.dataset.c=1;b.textContent='Toque otra vez para borrar todo'}}});
+ return `<h1>Para mi Informe</h1>
+ <p class="sub">Esta sesión no tiene taller aparte: su diagnóstico y su plan son el componente <b>"plan de desarrollo de equipo"</b> del Informe de Gestión (2 de diciembre), y se sustentan en la Sesión 9. Use Lencioni y Whitmore como sustento.</p>
+ <div class="info">Las partes privadas (el dato no dicho) no salen aquí.</div>
+ <div class="row"><button class="btn btn-p" id="dlDoc">Descargar en Word</button><a class="btn btn-g" id="waAll" target="_blank" rel="noopener" href="#">Enviarme todo por WhatsApp</a><button class="btn btn-s" id="cpAll">Copiar todo</button></div>
+ <pre class="out">${esc(infText())}</pre>
+ <div class="row"><button class="btn btn-s" id="clr">Borrar mis datos de este dispositivo</button></div>`}
+
+const LOGO='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';
+const h=(location.hash||'').slice(1);if(VIEWS.some(x=>x[0]===h))cur=h;
+window.addEventListener('hashchange',()=>{const k=location.hash.slice(1);if(VIEWS.some(x=>x[0]===k)&&k!==cur){cur=k;render()}});
+render();
+</script>
+</body>
+</html>
