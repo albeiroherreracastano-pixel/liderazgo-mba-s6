@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kit digital · Sesión 7 · El líder en tiempos de la IA</title>
+<style>
+:root{--navy:#1F2A5C;--blue:#2C5697;--gold:#B8891C;--green:#3E8E7E;--bg:#F6F8FB;--card:#fff;--line:#E2E8F0;--muted:#5B6576;--soft:#EEF2F8;--rose:#C2416B}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:#1E2533;line-height:1.5;font-size:16px}
+header{background:#fff;border-bottom:1px solid var(--line);padding:10px 14px 0;position:sticky;top:0;z-index:20}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.brand{font-size:.72rem;color:var(--blue);font-weight:700;letter-spacing:.04em}
+.who{font-size:.8rem;color:var(--muted);margin-top:2px}
+nav{display:flex;gap:6px;overflow-x:auto;padding:10px 0;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:0 0 auto;border:1px solid var(--line);background:#fff;color:var(--navy);padding:7px 12px;border-radius:999px;font-size:.85rem;font-weight:600;cursor:pointer}
+nav button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+nav button.done::after{content:" ✓";color:var(--green)}
+nav button.on.done::after{color:#A9DCCD}
+main{max-width:760px;margin:0 auto;padding:16px 14px 90px}
+h1{font-size:1.35rem;color:var(--navy);margin-bottom:4px}
+h2{font-size:1.1rem;color:var(--navy);margin:18px 0 8px}
+h3{font-size:1rem;color:var(--navy);margin:12px 0 6px}
+p{margin-bottom:8px}
+.sub{color:var(--muted);font-size:.9rem;margin-bottom:12px}
+.code{display:inline-block;background:var(--soft);color:var(--blue);font-weight:800;font-size:.75rem;padding:2px 8px;border-radius:999px;margin-bottom:6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.note{background:#FFF8E6;border:1px solid #F1D48A;border-radius:12px;padding:12px;font-size:.92rem;margin-bottom:12px}
+.info{background:var(--soft);border-left:4px solid var(--blue);border-radius:8px;padding:10px 12px;font-size:.92rem;margin-bottom:12px}
+.warn{background:#FDECEF;border-left:4px solid var(--rose);border-radius:8px;padding:10px 12px;font-size:.92rem;margin:8px 0}
+.ok{background:#E9F6F2;border-left:4px solid var(--green);border-radius:8px;padding:10px 12px;font-size:.92rem;margin:8px 0}
+label{display:block;font-weight:600;color:var(--navy);font-size:.92rem;margin:12px 0 4px}
+.hint{font-size:.8rem;color:var(--muted);margin:-2px 0 4px}
+textarea,input[type=text]{width:100%;border:1px solid #CBD5E1;border-radius:10px;padding:10px;font-size:1rem;font-family:inherit;background:#fff}
+textarea{min-height:68px;resize:vertical}
+.btn{display:inline-block;border:none;border-radius:10px;padding:11px 16px;font-size:.95rem;font-weight:700;cursor:pointer;text-decoration:none;text-align:center}
+.btn-p{background:var(--navy);color:#fff}
+.btn-s{background:#fff;color:var(--navy);border:1px solid #CBD5E1}
+.btn-g{background:#25A55F;color:#fff}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.chips button{border:1px solid #CBD5E1;background:#fff;padding:8px 12px;border-radius:999px;font-weight:600;color:var(--navy);cursor:pointer;font-size:.9rem}
+.chips button.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.reason{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-bottom:6px}
+.cs{display:flex;gap:4px}
+.cs button{border:1px solid #CBD5E1;background:#fff;border-radius:8px;padding:8px 10px;font-weight:800;color:var(--navy);cursor:pointer;font-size:.85rem}
+.cs button.on{background:var(--gold);border-color:var(--gold);color:#fff}
+.count{display:flex;gap:10px;margin-top:10px}
+.count div{flex:1;background:var(--soft);border-radius:10px;padding:10px;text-align:center}
+.count b{display:block;font-size:1.4rem;color:var(--navy)}
+.count span{font-size:.78rem;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:.86rem;margin:8px 0}
+th{background:var(--navy);color:#fff;text-align:left;padding:7px}
+td{border-bottom:1px solid var(--line);padding:7px;vertical-align:top}
+.three{display:grid;gap:8px}
+.three .c{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff}
+.three .c b{color:var(--navy)}
+.check{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}
+.check:last-child{border-bottom:none}
+.yn{display:flex;gap:4px;flex:0 0 auto}
+.yn button{border:1px solid #CBD5E1;background:#fff;border-radius:8px;padding:7px 10px;font-weight:700;color:var(--navy);cursor:pointer;font-size:.85rem}
+.yn button.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.role{border:2px solid var(--gold);border-radius:14px;padding:14px;background:#FFFCF3}
+.role h3{margin-top:0}
+.small{font-size:.82rem;color:var(--muted)}
+pre.out{white-space:pre-wrap;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;font-family:inherit;font-size:.86rem;max-height:340px;overflow:auto}
+.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 16px;border-radius:999px;font-size:.9rem;display:none;z-index:50}
+.emap{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0}
+.emap .q{border-radius:12px;padding:10px;border:1px solid var(--line)}
+.emap .q.pos{background:#EEF2F8}
+.emap .q.int{background:#FFF8E6}
+.emap .q h4{font-size:.9rem;color:var(--navy);margin-bottom:2px}
+.emap .q .t{font-size:.72rem;font-weight:800;letter-spacing:.04em;margin-bottom:4px}
+.emap .q.pos .t{color:var(--blue)}
+.emap .q.int .t{color:var(--gold)}
+.emap textarea{min-height:70px;font-size:.92rem}
+.prog{height:6px;background:var(--soft);border-radius:999px;overflow:hidden;margin:6px 0 2px}
+.prog div{height:100%;background:var(--green)}
+
+</style>
+<style>
+.sem{display:flex;gap:4px}
+.sem button{border:1px solid #CBD5E1;background:#fff;border-radius:8px;padding:7px 10px;font-weight:800;cursor:pointer;font-size:.8rem}
+.sem button.v.on{background:#2E7D4F;color:#fff;border-color:#2E7D4F}
+.sem button.a.on{background:#C98A12;color:#fff;border-color:#C98A12}
+.sem button.r.on{background:#B23A3A;color:#fff;border-color:#B23A3A}
+.priv{border:2px dashed var(--rose);border-radius:14px;padding:14px;background:#FFF7F9}
+.dcard{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff;margin-bottom:10px}
+.dcard .t{font-weight:700;color:var(--navy);margin-bottom:6px}
+.two{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:640px){.two{grid-template-columns:1fr 1fr}}
+.bigq{font-size:1.05rem;font-style:italic;color:var(--navy);border-left:4px solid var(--gold);padding:6px 12px;margin:10px 0}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><div class="brand">MBA · Liderazgo y Dirección de Equipos e Individuos<br><span style="color:var(--gold)">Albeiro Herrera C.</span></div><img src="data:image/png;base64,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" alt="Pontificia Universidad Javeriana Bogotá" style="height:34px;width:auto"></div>
+  <div class="who" id="who">Sesión 7 · El líder en tiempos de la IA</div>
+  <nav id="nav"></nav>
+</header>
+<main id="main"></main>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------- estado ---------- */
+let S={};
+try{S=JSON.parse(localStorage.getItem('kitS7')||'{}')}catch(e){S={}}
+function save(){try{localStorage.setItem('kitS7',JSON.stringify(S))}catch(e){}}
+function v(k,d=''){return S[k]!==undefined?S[k]:d}
+function setv(k,val){S[k]=val;save()}
+function esc(t){return String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(()=>t.style.display='none',2200)}
+function ta(k,label,ph='',hint=''){return `<label>${label}</label>${hint?`<div class="hint">${hint}</div>`:''}<textarea data-k="${k}" placeholder="${esc(ph)}">${esc(v(k))}</textarea>`}
+function tx(k,label,ph='',hint=''){return `<label>${label}</label>${hint?`<div class="hint">${hint}</div>`:''}<input type="text" data-k="${k}" placeholder="${esc(ph)}" value="${esc(v(k))}">`}
+function chips(k,opts,multi=false){
+ const cur=v(k,multi?[]:'');
+ return `<div class="chips" data-chips="${k}" data-multi="${multi?1:0}">${opts.map(o=>{const on=multi?cur.includes(o):cur===o;return `<button type="button" data-o="${esc(o)}" class="${on?'on':''}">${esc(o)}</button>`}).join('')}</div>`}
+function sem(k){const c=v(k);return `<div class="sem" data-chips="${k}" data-multi="0">
+ <button type="button" class="v ${c==='Verde'?'on':''}" data-o="Verde">Verde</button><button type="button" class="a ${c==='Amarillo'?'on':''}" data-o="Amarillo">Amarillo</button><button type="button" class="r ${c==='Rojo'?'on':''}" data-o="Rojo">Rojo</button></div>`}
+function bindAll(root){
+ root.querySelectorAll('[data-k]').forEach(el=>{el.addEventListener('input',()=>{setv(el.dataset.k,el.value);nav()})});
+ root.querySelectorAll('[data-chips]').forEach(box=>{
+  const k=box.dataset.chips,multi=box.dataset.multi==='1';
+  box.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+   const o=b.dataset.o;
+   if(multi){let a=v(k,[]).slice();a=a.includes(o)?a.filter(x=>x!==o):a.concat(o);setv(k,a)}
+   else setv(k,v(k)===o?'':o);
+   render(true)})})
+}
+async function copyText(txt){try{await navigator.clipboard.writeText(txt);toast('Copiado')}catch(e){toast('No se pudo copiar: selecciona el texto a mano')}}
+function waLink(txt){return 'https://wa.me/?text='+encodeURIComponent(txt)}
+function f(k){return (v(k)||'').trim()}
+
+const DIR=['Retener','Abdicar','Evitar'];
+const INT=['0','1','2','3'];
+const ZONAS=['Delegar','Aumentar','Conservar'];
+const AUT=['1 · Decido y aviso','2 · Decido y convenzo','3 · Consulto y decido','4 · Decidimos juntos','5 · Aconsejo y decides','6 · Decides y me informas','7 · Decides tú'];
+const D=[
+ ['D1','La IA contradice mi experiencia con un argumento que no puedo refutar en el momento.'],
+ ['D2','Alguien junior resuelve con IA en una hora lo que a mí me tomó años aprender.'],
+ ['D3','Un error de un agente de IA le llega a un cliente con mi firma.'],
+ ['D4','Mi jefe me pregunta por qué no seguí la recomendación de la IA.'],
+ ['D5','Mi equipo deja de consultarme porque consulta a la IA.'],
+ ['D6','La IA recomienda una decisión que afecta a personas y los números cuadran.']];
+
+/* ---------- vistas ---------- */
+const VIEWS=[
+ ['inicio','Inicio'],['ventajas','7.1 · Ventajas'],['tarea','7.2 · Tarea y semáforo'],['zonas','Mapa de 3 zonas'],
+ ['reeve','7.4 · Reeve'],['deleg','7.3 · Delegación 80 %'],['espejo','7.5 · Espejo'],['priv','7.6 · Privado'],
+ ['comp','7.7 · Compromiso'],['ficha','7.8 · Ficha'],['s6','7.9 · Reporte S6'],['todo','Entregar taller']];
+const DONE={
+ ventajas:()=>f('r1')&&f('r2')&&f('r3'),
+ tarea:()=>f('t_tarea')&&f('t_firma'),
+ reeve:()=>f('rv_mia'),
+ deleg:()=>f('d_que')&&f('d_tareacrit')&&f('d_giro'),
+ espejo:()=>f('i1_sit')&&f('i1_aj')&&f('i2_sit')&&f('i2_aj'),
+ priv:()=>f('p_protejo'),
+ comp:()=>f('k_disp')&&f('k_hare')&&f('k_intento'),
+ ficha:()=>f('fa_apr')&&f('fa_bp')&&f('fa_comp'),
+ s6:()=>f('s6_quien')&&v('s6_sost')
+};
+let cur='inicio';
+function nav(){const n=document.getElementById('nav');
+ n.innerHTML=VIEWS.map(([id,l])=>`<button data-v="${id}" class="${cur===id?'on':''} ${DONE[id]&&DONE[id]()?'done':''}">${l}</button>`).join('');
+ n.querySelectorAll('button').forEach(b=>b.onclick=()=>go(b.dataset.v))}
+function go(id){cur=id;try{history.replaceState(null,'','#'+id)}catch(e){};render();window.scrollTo(0,0)}
+function next(id,label){return `<div class="row"><button class="btn btn-p" data-go="${id}">${label} →</button></div>`}
+function render(keepScroll){
+ const y=window.scrollY;
+ const m=document.getElementById('main');
+ const name=f('nombre');
+ document.getElementById('who').textContent=name?`Sesión 7 · ${name}`:'Sesión 7 · El líder en tiempos de la IA';
+ nav();
+ const fn={inicio:vInicio,ventajas:vVentajas,tarea:vTarea,zonas:vZonas,reeve:vReeve,deleg:vDeleg,espejo:vEspejo,priv:vPriv,comp:vComp,ficha:vFicha,s6:vS6,todo:vTodo}[cur]||vInicio;
+ m.innerHTML=fn();bindAll(m);
+ m.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+ hooks.forEach(h=>h());hooks=[];
+ if(keepScroll)window.scrollTo(0,y);
+}
+let hooks=[];
+
+function vInicio(){
+ const done=Object.keys(DONE).filter(k=>DONE[k]()).length,tot=Object.keys(DONE).length;
+ return `<h1>El líder en tiempos de la IA</h1>
+ <p class="sub">Sesión 7 · martes 17 de noviembre de 2026 · Aumentado, no abdicado</p>
+ <div class="card"><h3>La idea de la noche</h3>
+ <p>La IA le quita al líder la ventaja de <b>saber más</b>, le discute la de <b>tener más experiencia</b> y le deja intacta la única que nunca fue delegable: <b>decidir y responder</b> por lo que decide.</p>
+ <p>Hoy van a usar la IA en su trabajo real, ver dónde los engaña, rehacer su delegación de la Sesión 4 y mirarse en el reflejo que les impide delegar bien.</p></div>
+ ${tx('nombre','Su nombre','Para que su taller salga con su nombre')}
+ <div class="two">${tx('triada','Tríada y rol','Ej.: tríada 2 · rol Q')}${tx('herr','Herramienta de IA que usa','ChatGPT, Claude, Gemini, Copilot…')}</div>
+ <div class="two">${tx('observo','A quién observo','P observa a Q, Q a R, R a P')}${tx('testigo','Mi testigo (de otra tríada)','Nombre')}</div>
+ <div class="info">Lo que escriba se guarda <b>solo en este dispositivo</b>, aunque se vaya la conexión. Nadie más lo ve. Al final, en <b>Entregar taller</b>, descarga su taller en Word o lo copia para enviarlo por correo.</div>
+ <div class="card"><h3>Su avance</h3><div class="prog"><div style="width:${Math.round(done/tot*100)}%"></div></div><p class="small">${done} de ${tot} secciones con lo esencial completo</p></div>
+ <div class="note"><b>Tres reglas.</b> 1. Lo personal es voluntario. 2. Se critica la idea, no a la persona. 3. <b>Ningún dato confidencial de su empresa entra a ninguna herramienta de IA</b>: cambie nombres, cifras y clientes.</div>
+ <div class="card"><h3>Qué se entrega</h3>
+ <table><tr><th>Parte</th><th>Peso</th><th>Sección</th></tr>
+ <tr><td>Inventario de Disparadores (la parte que usted elija)</td><td>40 %</td><td>7.5</td></tr>
+ <tr><td>Ficha de aprendizaje</td><td>30 %</td><td>7.8</td></tr>
+ <tr><td>Reporte del compromiso de la Sesión 6</td><td>30 %</td><td>7.9</td></tr></table>
+ <p class="small">La sección 7.6 es privada: no sale del dispositivo ni entra al taller. El uso de IA se declara al entregar.</p></div>
+ ${next('ventajas','Empezar')}`}
+
+function vVentajas(){
+ const opts=['La IA iguala','La IA supera','La IA no toca'];
+ return `<span class="code">7.1 · Bloque 1 · 6:00</span><h1>¿Qué te hace indispensable?</h1>
+ <p class="sub">No escriba lo que diría en una entrevista. Escriba lo que de verdad cree que lo hace necesario.</p>
+ <div class="card"><h3>Tres razones por las que me pagan más que a mi equipo</h3>
+ ${[1,2,3].map(i=>`${ta('r'+i,'Razón '+i,'')}<div class="hint">Después del laboratorio (6:45), márquela:</div>${chips('rm'+i,opts)}`).join('')}
+ </div>
+ <div class="info">En la tríada, cada uno lee sus tres razones <b>sin explicarlas</b>.</div>
+ <div class="card"><h3>Al cierre (9:45)</h3>${ta('ventaja','En la era de la IA, mi ventaja como líder es…','')}</div>
+ ${next('tarea','La tarea del lunes')}`}
+
+function vTarea(){
+ const tpl='Actúa como [rol]. Contexto: [sin datos sensibles]. Tarea: [qué necesito]. Formato: [cómo]. No inventes cifras ni fuentes; marca con [SUPUESTO] lo que no esté en lo que te di; al final dime qué tendría que verificar yo.';
+ hooks.push(()=>{document.getElementById('cpTpl').onclick=()=>copyText(tpl)});
+ return `<span class="code">7.2 · Bloque 2 · 6:15</span><h1>La tarea del lunes</h1>
+ <p class="sub">No vamos a evaluar qué tan bonito quedó. Vamos a evaluar si lo firmaría.</p>
+ <div class="card"><h3>1. Mi tarea (3 min)</h3>
+ ${ta('t_tarea','Tarea que hago todas las semanas y me toma al menos una hora','Un informe, un análisis, un correo difícil, la preparación de un comité… sin datos confidenciales')}
+ <div class="two">${tx('t_tiempo','Cuánto me toma hoy','Ej.: 3 horas')}${tx('t_calidad','Qué calidad espero','Ej.: listo para enviar al comité')}</div></div>
+ <div class="card"><h3>2. Trabajarla con su IA (17 min)</h3>
+ <div class="bigq">${tpl}</div>
+ <div class="row"><button class="btn btn-s" id="cpTpl">Copiar plantilla</button></div>
+ <p class="small" style="margin-top:8px">El más fluido de la tríada orienta, pero no teclea por otro. Sin conexión: trabaje en pareja con su vecino.</p></div>
+ <div class="card"><h3>3. Semáforo cruzado (10 min)</h3>
+ <p class="small">Intercambie pantalla con el compañero de la derecha. <b>Él</b> marca cinco afirmaciones de <b>su</b> resultado. Verde: verificable. Amarillo: inferencia sin comprobar. Rojo: inventado o sin respaldo.</p>
+ ${[1,2,3,4,5].map(i=>`<div class="dcard"><div class="t">Afirmación ${i}</div><input type="text" data-k="s${i}" placeholder="Cópiela o resúmala" value="${esc(v('s'+i))}"><div style="margin-top:6px">${sem('sc'+i)}</div></div>`).join('')}
+ ${chips('t_firma',['Sí, lo firmaría','Con cambios','No lo firmaría'])}
+ <div class="hint" style="margin-top:4px">Pregunta del auditor: ¿lo firmaría con su nombre ante su jefe?</div></div>
+ <div class="card"><h3>4. El balance (5 min)</h3>
+ ${tx('t_ahorro','Tiempo ahorrado de verdad, contando la revisión','')}
+ ${ta('t_perdi','Una ventaja que perdí hoy','')}
+ <p class="small">Ahora vuelva a 7.1 y marque cada razón: iguala, supera o no toca.</p></div>
+ ${next('zonas','Mapa de tres zonas')}`}
+
+function vZonas(){
+ return `<span class="code">Bloque 3 · 6:55 · referencia</span><h1>Lo que la IA le deja al líder</h1>
+ <div class="card"><h3>Tres ventajas</h3>
+ <div class="three"><div class="c"><b>Saber más</b><br>Erosionada.</div><div class="c"><b>Tener más experiencia</b><br>Debilitada de forma desigual: la IA la iguala en unas tareas y falla en otras.</div><div class="c"><b>Decidir y responder</b><br>Intacta, pero se vacía si el líder firma lo que no entiende.</div></div>
+ <p class="small" style="margin-top:8px">Criterio de diseño de la cátedra, no evidencia empírica.</p></div>
+ <div class="card"><h3>La frontera es irregular</h3>
+ <p>En un experimento con 758 consultores de BCG, quienes usaron GPT-4 en tareas <b>dentro</b> de la capacidad de la IA completaron 12,2 % más tareas, 25,1 % más rápido y con calidad más de 40 % superior. En una tarea <b>fuera</b> de esa capacidad acertaron 19 puntos porcentuales menos. Tareas que parecen igual de difíciles caen a lados distintos.</p>
+ <p class="small">Dell'Acqua et al. (2026), <i>Organization Science</i> 37(2), 403–423.</p></div>
+ <div class="card"><h3>El mapa de tres zonas</h3>
+ <p><b>Tres preguntas:</b> ¿la IA lo hace bien aquí? ¿Puedo verificarlo a un costo razonable? ¿Quién responde si sale mal?</p>
+ <table><tr><th>Zona</th><th>Cuándo</th><th>Qué hace el líder</th></tr>
+ <tr><td><b>Delegar</b></td><td>La IA lo hace bien y el error es detectable y reversible</td><td>Define límites y revisa por excepción</td></tr>
+ <tr><td><b>Aumentar</b></td><td>La IA aporta, pero el juicio o el contexto cambian la decisión</td><td>La IA prepara; el líder entiende y decide</td></tr>
+ <tr><td><b>Conservar</b></td><td>Afecta personas, propósito o confianza, o el líder no podría explicarlo</td><td>Decide el líder; la IA, como mucho, cuestiona</td></tr></table></div>
+ <div class="card"><h3>Tres patrones</h3>
+ <p><b>Aumentado:</b> define propósito, autoridad y control. <b>Abdicado:</b> le atribuye a la herramienta una responsabilidad que es suya. <b>Retención injustificada:</b> no suelta aunque la evidencia lo permita. Los dos extremos son puntos ciegos.</p></div>
+ ${next('reeve','Lo que Reeve ve y no ve')}`}
+
+function vReeve(){
+ return `<span class="code">7.4 · Bloque 4 · 7:10</span><h1>Lo que Reeve ve y lo que no ve</h1>
+ <p class="sub">Traiga la postura crítica de su abstract: Reeve o la lectura alternativa que eligió.</p>
+ <div class="card">${ta('rv_mia','Mi pregunta abierta o mi desacuerdo con el autor','')}</div>
+ <div class="card"><div class="two">${ta('rv_ve','Lo que el autor ve','Lo que se dijo en la plenaria')}${ta('rv_nove','Lo que el autor no ve','')}</div></div>
+ ${next('deleg','Laboratorio del 80 %')}`}
+
+function vDeleg(){
+ return `<span class="code">7.3 · Bloque 5 · 7:20</span><h1>Si la IA hace el 80 %, ¿qué cambia en lo que delego?</h1>
+ <div class="bigq">Experimento mental, no dato: desde el lunes la IA hace el 80 % del trabajo intelectual de la tarea que usted delegó en la Sesión 4. La persona es la misma; su trabajo no. Su jefe le pregunta: "¿Y entonces, para qué te necesito?"</div>
+ <div class="card"><h3>A · Mi delegación de la Sesión 4 (5 min)</h3>
+ <p class="small">Si no la trae, hágala ahora: una tarea o decisión real que hoy hace usted y debería delegar.</p>
+ ${tx('d_que','Qué delego','')}${tx('d_quien','A quién (rol, sin nombre)','')}
+ <label>Con cuánta autonomía (escala de la S4)</label>${chips('d_aut',AUT)}
+ ${tx('d_cuando','Cuándo','')}${ta('d_seg','Cómo hago seguimiento','')}
+ ${ta('d_razon','La razón personal que nombré en la S4 para no soltarla','Control, desconfianza, miedo a que otro lo haga mejor…')}</div>
+ <div class="card"><h3>B · Ahora la IA hace el 80 % (12 min)</h3>
+ ${[1,2,3].map(i=>`<div class="dcard"><div class="t">Parte ${i} de la tarea</div><input type="text" data-k="dp${i}" placeholder="Qué hace ahora la IA y qué queda para la persona" value="${esc(v('dp'+i))}"><div style="margin-top:6px">${chips('dz'+i,ZONAS)}</div></div>`).join('')}
+ ${chips('d_tareacrit',['Delego la tarea','Delego el criterio','Las dos'])}
+ <label>¿Cambia el nivel de autonomía de la persona? Nuevo nivel:</label>${chips('d_aut2',AUT)}
+ ${ta('d_verif','¿Qué verifico, cuándo y quién puede detener el trabajo?','')}
+ ${ta('d_capac','¿Qué capacidad tiene que seguir practicando esa persona para no depender de la IA?','')}
+ ${ta('d_dejo','¿Qué dejo de hacer yo el lunes?','')}</div>
+ <div class="card"><h3>C · El giro (3 min)</h3>
+ <div class="warn">Tres semanas después, un error del trabajo hecho con IA llega a un cliente o a la junta con su firma. La persona dice: "Lo revisó la IA".</div>
+ ${ta('d_giro','¿Qué hago el lunes?','¿Le quito autonomía a todo o ajusto un punto?')}</div>
+ <div class="card"><h3>D · Defensa en la tríada (8 min por persona)</h3>
+ <p>3 min presenta · 3 min preguntas · 2 min registro. Preguntas obligatorias: <b>"¿Delegas la tarea o el criterio?"</b> y <b>"¿Quién responde si sale mal?"</b></p>
+ <div class="note"><b>Si usted es observador:</b> anote en el post-it dos frases o actos <b>literales</b> de la persona que observa cuando se discute qué se suelta. Ni un adjetivo. Dóblelo y escriba afuera su nombre. Se lo entrega al profesor en la pausa.</div>
+ ${ta('d_aprendi','Lo que me preguntaron que no había pensado','')}</div>
+ ${next('espejo','El espejo')}`}
+
+function vEspejo(){
+ return `<span class="code">7.5 · Bloque 6 · 8:25</span><h1>El espejo: Inventario de Disparadores</h1>
+ <p class="sub">Herramienta de la metodología Albeiro Herrera C., construida sobre el capítulo de Reeve sobre puntos ciegos. Aquí no se vale explicar por qué lo hizo.</p>
+ <div class="card"><h3>A · Escaneo de seis situaciones (12 min)</h3>
+ <p class="small">Intensidad 0 (nada) a 3 (me mueve mucho). Reacción literal: lo que diría o haría en los primeros diez segundos. Dirección: retener, abdicar o evitar.</p>
+ ${D.map(([id,t])=>`<div class="dcard"><div class="t">${id} · ${t}</div><label style="margin-top:4px">Intensidad</label>${chips('in_'+id,INT)}<input type="text" style="margin-top:8px" data-k="re_${id}" placeholder="Reacción literal, entre comillas" value="${esc(v('re_'+id))}"><div style="margin-top:6px">${chips('di_'+id,DIR)}</div></div>`).join('')}</div>
+ <div class="card"><h3>B · Evidencia propia: mi reporte de la Sesión 6 (4 min)</h3>
+ ${ta('ev_s6','Si no tuve la conversación: ¿qué me frenó? Si la tuve: ¿qué hice en el primer momento difícil?','')}
+ ${ta('ev_parece','¿Se parece a la dirección que más marqué arriba? ¿En qué?','')}</div>
+ <div class="card"><h3>C · Contraste con mi observador (12 min)</h3>
+ <p class="small">El observador lee sus frases literales. Usted responde solo: "Gracias. Lo que me llevo es…". Sin justificarse.</p>
+ ${ta('co_vio','Lo que mi observador vio (literal)','')}${ta('co_llevo','Lo que me llevo','')}</div>
+ <div class="card"><h3>D · Tabla del taller (40 %)</h3>
+ <p class="small">Sus dos situaciones más intensas. Frases literales, no adjetivos.</p>
+ <div class="info"><b>Ejemplo.</b> Situación: un agente fijó un precio y perdimos dinero en una venta. Reacción: "Apaguen el sistema; desde hoy reviso cada precio". Punto ciego: perfeccionismo que paraliza (retener). Ajuste: definir un límite de pérdida aceptable y revisar solo lo que lo supera.</div>
+ ${[1,2,3].map(i=>`<div class="dcard"><div class="t">Situación ${i}${i===3?' (opcional)':''}</div>
+ ${ta('i'+i+'_sit','Situación','')}${ta('i'+i+'_re','Reacción inmediata (literal)','')}${ta('i'+i+'_pc','Punto ciego que revela','')}${ta('i'+i+'_aj','Ajuste que me daría más criterio','')}</div>`).join('')}</div>
+ ${next('priv','Zona privada')}`}
+
+function vPriv(){
+ return `<span class="code">7.6 · privado · no se entrega</span><h1>Zona privada</h1>
+ <div class="priv"><p><b>Solo para usted.</b> Esta sección no se lee, no se comparte, no se califica y <b>no sale en el taller</b>. Es la columna del compromiso oculto que vio en la Sesión 4 con Kegan y Lahey.</p>
+ ${ta('p_protejo','¿Qué estoy protegiendo cuando retengo, abdico o evito?','')}
+ ${ta('p_temo','¿Qué temo que pase si dejo de protegerlo?','')}
+ ${ta('p_costo','¿Qué le cuesta eso a mi equipo?','')}
+ ${ta('p_frase','Frase del punto ciego','Cuando ___, tiendo a ___ porque protejo ___. El costo para mi equipo es ___.')}</div>
+ ${next('comp','Mi compromiso')}`}
+
+function compText(){
+ return `Compromiso sobre mi punto ciego · Sesión 7 · ${f('nombre')}
+Tarea que voy a aumentar con IA: ${f('k_tarea')} (zona: ${v('k_zona')})
+Si ocurre ${f('k_disp')}, en lugar de ${f('k_siempre')}, haré ${f('k_hare')}.
+Primer intento (antes de la S8, miércoles 18): ${f('k_intento')}
+Evidencia que guardaré: ${f('k_evid')}`}
+function vComp(){
+ hooks.push(()=>{const b=document.getElementById('waK');b.onclick=()=>{b.href=waLink(compText())}});
+ return `<span class="code">7.7 · Bloque 7 · 9:15</span><h1>Un compromiso, dos tiempos</h1>
+ <div class="two"><div class="ok"><b>Tiempo 1 · antes de la Sesión 8 (miércoles 18).</b> Hace el primer intento. En la S8 solo se reporta ese intento.</div>
+ <div class="info"><b>Tiempo 2 · Informe de Gestión (2 de diciembre).</b> El balance completo va en la sección de puntos ciegos (25 % del documento).</div></div>
+ <div class="card">
+ ${tx('k_tarea','Una tarea que voy a aumentar con IA esta semana','')}${chips('k_zona',ZONAS)}
+ ${tx('k_disp','Si ocurre ___ (mi disparador)…','')}
+ ${tx('k_siempre','…en lugar de ___ (mi reacción de siempre)…','')}
+ ${tx('k_hare','…haré ___ (conducta observable)','')}
+ ${ta('k_intento','Primer intento: qué, con quién y cuándo (antes de las 6:00 p. m. del miércoles)','')}
+ ${ta('k_evid','Evidencia que guardaré (no "me sentí mejor")','')}
+ ${ta('k_balance','Para el Informe: qué voy a observar en mí entre el 18 de noviembre y el 2 de diciembre','')}</div>
+ <div class="note">Hot seat: <b>"¿Esto es conducta o intención?"</b> y <b>"¿Lo puedes intentar antes de mañana a las 6?"</b></div>
+ <div class="row"><a class="btn btn-g" id="waK" target="_blank" rel="noopener" href="#">Enviar a mi testigo por WhatsApp</a></div>
+ <p class="small" style="margin-top:6px">Ese mensaje es la firma.</p>
+ ${next('ficha','Ficha de aprendizaje')}`}
+
+function vFicha(){
+ return `<span class="code">7.8 · Bloque 8 · 9:40</span><h1>Ficha de aprendizaje (30 %)</h1>
+ <p class="sub">Media página.</p>
+ <div class="card">${ta('fa_apr','Un aprendizaje de esta sesión','')}${ta('fa_bp','Una buena práctica aplicable a mi organización','')}${ta('fa_comp','Un compromiso con fecha','Puede ser el de 7.7')}</div>
+ <div class="info">Vuelva a 7.1 y escriba: "En la era de la IA, mi ventaja como líder es…".</div>
+ ${next('s6','Reporte de la Sesión 6')}`}
+
+function vS6(){
+ return `<span class="code">7.9 · seguimiento · 30 %</span><h1>Reporte del compromiso de la Sesión 6</h1>
+ <p class="sub">El compromiso era sostener la conversación difícil o la negociación pendiente. Un análisis honesto de por qué no se cumplió también se valora; maquillar el reporte no suma.</p>
+ <div class="card">${tx('s6_quien','Con quién era (rol, sin nombres)','')}${ta('s6_paso','Qué pasó','')}
+ <label>¿La sostuve?</label>${chips('s6_sost',['Sí','Parcialmente','No'])}
+ ${ta('s6_rel','Cómo cuidé la relación','')}${ta('s6_freno','Si no la tuve: qué me frenó','')}</div>
+ ${next('todo','Entregar taller')}`}
+
+/* ---------- taller ---------- */
+function L(label,val){return val?`${label}: ${val}\n`:''}
+function tallerText(){
+ let t=`TALLER SESIÓN 7 · EL LÍDER EN TIEMPOS DE LA IA\nLiderazgo y Dirección de Equipos e Individuos · MBA · Pontificia Universidad Javeriana\nEstudiante: ${f('nombre')}\n\n`;
+ t+=`1. PRODUCTO DE LA SESIÓN (40 %) · INVENTARIO DE DISPARADORES\n`;
+ [1,2,3].forEach(i=>{if(f('i'+i+'_sit')){t+=`\nSituación ${i}: ${f('i'+i+'_sit')}\n`+L('Reacción inmediata',f('i'+i+'_re'))+L('Punto ciego que revela',f('i'+i+'_pc'))+L('Ajuste que me daría más criterio',f('i'+i+'_aj'))}});
+ t+=`\n2. FICHA DE APRENDIZAJE (30 %)\n`+L('Aprendizaje',f('fa_apr'))+L('Buena práctica',f('fa_bp'))+L('Compromiso con fecha',f('fa_comp'));
+ t+=`\n3. SEGUIMIENTO DEL COMPROMISO DE LA SESIÓN 6 (30 %)\n`+L('Con quién',f('s6_quien'))+L('Qué pasó',f('s6_paso'))+L('¿La sostuve?',v('s6_sost'))+L('Cómo cuidé la relación',f('s6_rel'))+L('Qué me frenó',f('s6_freno'));
+ if(v('anexos')){
+  t+=`\nANEXOS (no se califican)\n`;
+  t+=L('Mi ventaja como líder',f('ventaja'));
+  t+=L('Delegación S4',f('d_que'))+L('Autonomía antes',v('d_aut'))+L('Autonomía con IA al 80 %',v('d_aut2'))+L('Tarea o criterio',v('d_tareacrit'))+L('Respuesta al giro',f('d_giro'));
+  t+=L('Compromiso: si ocurre',f('k_disp'))+L('en lugar de',f('k_siempre'))+L('haré',f('k_hare'))+L('Primer intento',f('k_intento'));
+ }
+ t+=`\nDECLARACIÓN DE USO DE IA\n${f('ia_decl')||'(sin completar)'}\n`;
+ return t}
+function docHtml(){
+ const body=esc(tallerText()).replace(/\n/g,'<br>');
+ return `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><title>Taller S7</title></head><body style="font-family:Calibri,Arial;font-size:11pt"><p><img src="data:image/png;base64,${LOGO}" width="200" height="59"></p><p style="color:#B8891C"><b>Albeiro Herrera C.</b></p>${body}</body></html>`}
+function vTodo(){
+ const t=tallerText();
+ hooks.push(()=>{
+  document.getElementById('cpAll').onclick=()=>copyText(tallerText());
+  document.getElementById('dlDoc').onclick=()=>{const blob=new Blob(['﻿'+docHtml()],{type:'application/msword'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Taller_S7_'+(f('nombre')||'estudiante').replace(/\s+/g,'_')+'.doc';document.body.appendChild(a);a.click();a.remove()};
+  document.getElementById('mail').onclick=()=>{location.href='mailto:?subject='+encodeURIComponent('Taller Sesión 7 · '+f('nombre'))+'&body='+encodeURIComponent(tallerText().slice(0,1800))};
+  document.getElementById('clr').onclick=()=>{const b=document.getElementById('clr');if(b.dataset.c){S={};save();toast('Kit borrado');go('inicio')}else{b.dataset.c=1;b.textContent='Toque otra vez para borrar todo'}}});
+ const faltan=[];if(!DONE.espejo())faltan.push('7.5 (dos situaciones con su ajuste)');if(!DONE.ficha())faltan.push('7.8');if(!DONE.s6())faltan.push('7.9');
+ return `<h1>Entregar taller</h1>
+ <p class="sub">Entrega por correo hasta el <b>domingo 22 de noviembre, 11:59 p. m.</b> La zona privada (7.6) no sale aquí.</p>
+ ${faltan.length?`<div class="warn">Le falta: ${faltan.join(', ')}.</div>`:`<div class="ok">Las tres partes calificables están completas.</div>`}
+ <div class="card">${ta('ia_decl','Declaración de uso de IA','Qué herramienta usé, en qué secciones y para qué. Si no la usé fuera de clase, escríbalo.')}
+ <label><input type="checkbox" id="anx" ${v('anexos')?'checked':''}> Incluir anexos (ventaja, delegación y compromiso). No se califican.</label></div>
+ <div class="row"><button class="btn btn-p" id="dlDoc">Descargar mi taller en Word</button><button class="btn btn-s" id="cpAll">Copiar todo</button><button class="btn btn-s" id="mail">Abrir correo</button></div>
+ <p class="small" style="margin-top:8px">Lo más seguro: descargue el Word y adjúntelo a su correo. "Abrir correo" pega un resumen que puede quedar cortado.</p>
+ <pre class="out">${esc(t)}</pre>
+ <div class="row"><button class="btn btn-s" id="clr">Borrar mis datos de este dispositivo</button></div>`}
+document.addEventListener('change',e=>{if(e.target&&e.target.id==='anx'){setv('anexos',e.target.checked);render(true)}});
+
+/* ---------- arranque ---------- */
+const LOGO='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';
+const h=(location.hash||'').slice(1);if(VIEWS.some(x=>x[0]===h))cur=h;
+window.addEventListener('hashchange',()=>{const k=location.hash.slice(1);if(VIEWS.some(x=>x[0]===k)&&k!==cur){cur=k;render()}});
+render();
+</script>
+</body>
+</html>
