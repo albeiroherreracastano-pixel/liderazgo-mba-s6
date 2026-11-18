@@ -187,16 +187,15 @@ function rolBy(code){const c=(code||'').toUpperCase().normalize('NFD').replace(/
  for(const r of ['r1','r2']){if(CASOS[r].roles[c])return {r,c,...CASOS[r].roles[c]}}return null}
 
 /* ---------- vistas ---------- */
-const VIEWS=[['inicio','8.0 · Inicio'],['rad','8.1 · Radiografía'],['pir','8.2 · Pirámide'],['pec','8.3 · Pecera'],['per','8.4 · Pérdida'],
- ['coach','8.5 · Coaching'],['dist','8.6 · A distancia'],['plan','8.7 · Plan'],['ficha','8.8 · Ficha'],['inf','Para mi Informe']];
+const VIEWS=[['inicio','8.0 · Inicio'],['rad','8.1 · Radiografía'],['pir','8.2 · Pirámide'],['ir','8.3 · Ir primero'],['per','8.4 · Pérdida'],
+ ['coach','8.5 · Coaching'],['plan','8.6 · Plan'],['ficha','8.7 · Ficha'],['inf','Para mi Informe']];
 const DONE={
  inicio:()=>f('nombre')&&v('modo')&&v('trio'),
  rad:()=>nRad()===15,
- pir:()=>f('p_alimento')&&f('p_conducta_'+(rompe()||'C')),
- pec:()=>f('o_frase'),
- per:()=>f('pe_cambio')&&f('pe_oculto'),
+ pir:()=>f('p_alimento')&&f('p_hecho'),
+ ir:()=>v('ir_nivel')&&f('ir_reaccion'),
+ per:()=>f('pe_cambio')&&f('pe_fabrico'),
  coach:()=>f('co_rol')&&f('co_llevo'),
- dist:()=>f('ri_1'),
  plan:()=>f('a1_que')&&f('a1_met'),
  ficha:()=>f('fa_apr')&&f('fa_bp')
 };
@@ -211,7 +210,7 @@ function render(keepScroll){
  const y=window.scrollY,m=document.getElementById('main'),name=f('nombre');
  document.getElementById('who').textContent=name?`Sesión 8 · ${name}`:'Sesión 8 · Liderando a otros';
  nav();
- const fn={inicio:vInicio,rad:vRad,pir:vPir,pec:vPec,per:vPer,coach:vCoach,dist:vDist,plan:vPlan,ficha:vFicha,inf:vInf}[cur]||vInicio;
+ const fn={inicio:vInicio,rad:vRad,pir:vPir,ir:vIr,per:vPer,coach:vCoach,plan:vPlan,ficha:vFicha,inf:vInf}[cur]||vInicio;
  m.innerHTML=fn();bindAll(m);
  m.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
  hooks.forEach(h=>h());hooks=[];
@@ -222,7 +221,7 @@ function vInicio(){
  return `<span class="code">8.0 · 6:00</span><h1>Liderando a otros</h1>
  <p class="sub">Sesión 8 · miércoles 18 de noviembre de 2026 · Del equipo al sistema</p>
  <div class="bigq">¿Mi equipo funciona como funciona por cómo lo lidero yo?</div>
- <div class="card"><h3>Lo que van a hacer hoy</h3><p>Toda la noche trabajan sobre <b>un solo equipo real</b>: lo radiografían, encuentran dónde se rompe, ven a otro equipo funcionar desde afuera, trabajan la resistencia al cambio y a la persona que más les cuesta, y salen con un plan que sustentan en la Sesión 9.</p></div>
+ <div class="card"><h3>Lo que van a hacer hoy</h3><p>Toda la noche trabajan sobre <b>un solo equipo real</b>: lo radiografían, encuentran dónde se rompe, viven qué hace que un equipo se atreva a decir la verdad, trabajan la resistencia al cambio y a la persona que más les cuesta, y salen con un plan que sustentan en la Sesión 9.</p></div>
  ${tx('nombre','Su nombre','Para que su documento salga con su nombre')}
  <label>Su trío (lo asigna el profesor)</label>${chips('trio',['A','B','C'])}
  <div class="card"><h3>El equipo que va a trabajar</h3>
@@ -232,14 +231,14 @@ function vInicio(){
  ${ta('eq_roles','Roles que lo componen (sin nombres)','Ej.: 2 analistas, 1 coordinadora, 1 practicante…')}</div>
  <div class="card"><h3>Reporte del compromiso de la Sesión 7</h3><p class="small">Solo el primer intento. El balance completo va al Informe de Gestión.</p>
  ${chips('s7_hice',['Lo intenté','Lo intenté a medias','No lo intenté'])}
- ${ta('s7_paso','Qué hice y qué pasó (o qué me frenó)','30 segundos en voz alta')}</div>
+ ${ta('s7_paso','Qué hice y qué pasó (o qué me frenó)','Por escrito: esta noche no hay ronda oral')}</div>
  <div class="note"><b>Regla de la noche:</b> se habla del equipo por roles, <b>nunca por nombres</b>. Lo que se dice aquí se queda aquí.</div>
  <div class="info">Lo que escriba se guarda <b>solo en este dispositivo</b>, aunque se vaya la conexión.</div>
  <div class="card"><h3>Su avance</h3><div class="prog"><div style="width:${Math.round(done/tot*100)}%"></div></div><p class="small">${done} de ${tot} secciones con lo esencial completo</p></div>
  ${next('rad','8.1 · Radiografía')}`}
 
 function vRad(){
- return `<span class="code">8.1 · 6:07 · 7 min</span><h1>Radiografía de mi equipo</h1>
+ return `<span class="code">8.1 · 6:02 · 8 min</span><h1>Radiografía de mi equipo</h1>
  <p class="sub">15 afirmaciones sobre ${f('eq_que')?'<b>'+esc(f('eq_que'))+'</b>':'su equipo'}. Responda por lo que pasa, no por lo que debería pasar.</p>
  <div class="info">1 = nada cierto · 5 = totalmente cierto. Su perfil se calcula, pero no se muestra hasta que el profesor presente el modelo.</div>
  ${ITEMS.map((it,i)=>`<div class="dcard"><div class="t" style="font-weight:600">${i+1}. ${it[2]}</div><div class="cs" data-chips="r${i}" data-multi="0">${[1,2,3,4,5].map(n=>`<button type="button" data-o="${n}" class="${String(v('r'+i))===String(n)?'on':''}">${n}</button>`).join('')}</div></div>`).join('')}
@@ -253,67 +252,59 @@ function bars(){const p=perfil(),rk=rompe();
 function vPir(){
  const rk=rompe(),show=v('revela');
  if(!show){hooks.push(()=>{document.getElementById('rev').onclick=()=>{setv('revela',1);render()}})}
- return `<span class="code">8.2 · 6:20 · 40 min</span><h1>Mi equipo en la pirámide</h1>
- <div class="card"><h3>Las cinco disfunciones (Lencioni)</h3><p class="small">Cada nivel se apoya en el de abajo. En un equipo sano, la responsabilidad la exigen los <b>pares</b>, no solo el jefe.</p>
+ return `<span class="code">8.2 · 6:15 · 35 min</span><h1>Mi equipo en la pirámide</h1>
+ <div class="card"><h3>Las cinco disfunciones (Lencioni)</h3><p class="small">Se lee de abajo hacia arriba: cada nivel se apoya en el anterior. En un equipo sano, la responsabilidad la exigen los <b>pares</b>, no solo el jefe.</p>
  <table><tr><th>Nivel</th><th>Cuando falla</th></tr>${NIV.slice().reverse().map(([k,n,d])=>`<tr><td><b>${n}</b></td><td>${d}</td></tr>`).join('')}</table></div>
  ${show?bars():`<div class="row"><button class="btn btn-p" id="rev">Mostrar mi perfil</button></div><p class="small">Tóquelo cuando el profesor lo indique.</p>`}
  ${nRad()<15?`<div class="warn">Le faltan ${15-nRad()} respuestas en 8.1 para que el perfil sea completo.</div>`:''}
  <div class="card"><h3>Galería</h3><p>Pase al frente y marque en el pliego el nivel donde <b>se rompe primero</b> su equipo${rk?`: <b>${nivName(rk)}</b>`:''}.</p></div>
- <div class="card"><h3>Diagnóstico (10 min)</h3><p class="small">Una conducta observable del último mes por nivel. Hechos, no adjetivos.</p>
- ${NIV.map(([k,n])=>tx('p_conducta_'+k,n+(k===rk?' · donde se rompe':''),'Ej.: en la reunión del lunes nadie dijo que el plazo era imposible')).join('')}
- ${ta('p_alimento',M('¿Qué hago yo que alimenta lo que pasa en el nivel donde se rompe mi equipo?','¿Qué hago yo, como miembro del equipo, que alimenta lo que pasa en el nivel donde se rompe?'),'')}
- ${ta('p_rol','¿Qué capacidad o rol le falta a mi equipo?','Ej.: alguien que cuestione, alguien que cierre, alguien que mida')}</div>
- <div class="card"><h3>Cruce con las sesiones 5 y 6</h3>
+ <div class="card" style="border:2px solid var(--gold)"><span class="code">Esta noche · 12 min</span><h3>Lo que yo alimento</h3>
+ ${ta('p_hecho','Un hecho del último mes que muestra dónde se rompe mi equipo','Ej.: en la reunión del lunes nadie dijo que el plazo era imposible')}
+ ${ta('p_alimento',M('¿Qué hago yo que alimenta esto?','¿Qué hago yo, como miembro del equipo, que alimenta esto?'),'Una conducta propia, no del equipo. Ej.: llego con la propuesta armada y la presento como decidida')}</div>
+ <div class="card"><span class="code">Para su Informe · después de clase</span><h3>El diagnóstico completo</h3>
+ <p class="small">Una conducta observable del último mes por nivel. Hechos, no adjetivos.</p>
+ ${NIV.map(([k,n])=>tx('p_conducta_'+k,n+(k===rk?' · donde se rompe':''),'')).join('')}
+ ${ta('p_rol','¿Qué capacidad o rol le falta a mi equipo?','Ej.: alguien que cuestione, alguien que cierre, alguien que mida')}
  ${ta('p_360','Lo que dice mi 360° de observador (o mi mapa de brecha de la S5)','')}
  ${ta('p_estilo','¿Qué estilo mío sobra o falta en el nivel donde se rompe mi equipo?','')}
  ${ta('p_filtro','El filtro de la S6: ¿a quién de mi equipo se lo aplico?','Rol, sin nombre')}</div>
- <div class="card"><h3>Defienda a su equipo (12 min)</h3>
- <p class="small">Usted presenta su diagnóstico en 2 minutos. Su compañero habla 2 minutos como vocero de su equipo: "${M('Lo que nuestro jefe no ve es…','Lo que nuestro compañero no ve es…')}". Usted solo responde: "Gracias. Lo que me llevo es…".</p>
- ${ta('p_vocero','Lo que dijo el vocero de mi equipo','')}${ta('p_llevo','Lo que me llevo','')}</div>
- ${next('pec','8.3 · Pecera')}`}
-
+ ${next('ir','8.3 · Ir primero')}`}
 function rolCard(rol){return `<div class="role"><span class="code">${rol.r==='r1'?'Ronda 1':'Ronda 2'}</span><h3>Usted es: ${rol.n}</h3>
  <p><b>Su postura en la reunión:</b> ${rol.pub}</p>
  <div class="priv" style="margin:8px 0"><b>Dato secreto:</b> ${rol.sec}</div>
  <p class="small"><b>No ofrezca este dato.</b> Solo lo revela si ${rol.cuando}. Si le preguntan, responda con la verdad.</p></div>`}
-function vPec(){
- const rol=rolBy(v('codigo'));
- hooks.push(()=>{document.getElementById('verRol').onclick=()=>render(true)});
- return `<span class="code">8.3 · 7:00 · 40 min</span><h1>La pecera</h1>
- <p class="sub">Un trío decide en la tarima. Los demás observan los cinco niveles. Dos rondas, dos casos.</p>
- <div class="two">${['r1','r2'].map(r=>`<div class="card"><h3 style="margin-top:0">${CASOS[r].t}</h3>${CASOS[r].comun}</div>`).join('')}</div>
- <div class="card"><h3>Si usted juega</h3>
- ${tx('codigo','Código de su rol','El que le entregó el profesor en el post-it')}<div class="row"><button class="btn btn-s" id="verRol">Ver mi rol</button></div>
- ${rol?rolCard(rol):(f('codigo')?'<div class="warn">Ese código no existe. Revise el post-it.</div>':'')}</div>
- <div class="card"><h3>Si usted observa</h3>
- ${tx('o_quien','A quién observo (el cargo)','Ej.: Gerente Financiero')}
- ${ta('o_frase','Frases o actos literales de esa persona','Solo hechos, sin adjetivos: "dijo…", "se calló cuando…"')}
- <label>¿En qué nivel se vio mejor o peor ese equipo?</label>${chips('o_nivel',NIV.map(x=>x[1]),true)}
- <label>¿Qué datos secretos salieron?</label>${chips('o_datos',['Alternativa / inventario','Contribución del Caribe / descuento prometido','Plazo de la junta / contrato','Ninguno'],true)}
- ${ta('o_rolfalto','¿Qué rol faltó en ese equipo?','')}
- ${v('trio')==='C'?ta('o_regla','Como consultor: la regla que habría cambiado el resultado',''):''}</div>
- <div class="card"><h3>Trío B · Nuestras tres reglas (antes de la ronda 2)</h3>
- ${tx('reg1','Regla 1','')}${tx('reg2','Regla 2','')}${tx('reg3','Regla 3','')}</div>
- ${ta('pec_alto','Lo que hace distinto a un equipo de alto desempeño, en una frase mía','')}
+function vIr(){
+ return `<span class="code">8.3 · 6:50 · 30 min</span><h1>Ir primero</h1>
+ <div class="bigq">La confianza empieza cuando alguien se muestra vulnerable primero, y nadie lo usa en su contra.</div>
+ <div class="card"><h3>Elija su nivel</h3><p class="small">Lo elige usted. Esto no sale del kit ni va al Informe.</p>
+ ${chips('ir_nivel',['A · Algo que mi cargo dice que debería saber y no sé','B · Un error reciente que mi equipo no conoce'])}</div>
+ <div class="priv"><h3 style="margin-top:0">Privado · lo que voy a contar</h3>
+ ${ta('ir_texto','En dos o tres líneas','')}</div>
+ <div class="card"><h3>En el trío · 4 minutos por persona</h3>
+ <table><tr><th>Quien cuenta · 2 min</th><th>Quienes escuchan · 2 min</th></tr>
+ <tr><td>Lo que escribió, sin explicar de más</td><td>Solo dicen "gracias por decirlo" y hacen <b>una pregunta de curiosidad</b>. Prohibido aconsejar y prohibido minimizar ("tranquilo, eso le pasa a todo el mundo")</td></tr></table></div>
+ <div class="card"><h3>Plenaria</h3>
+ <div class="two">${ta('ir_atrever','Lo que nos hizo atrevernos','')}${ta('ir_callado','Lo que nos habría callado','')}</div></div>
+ <div class="card"><h3>Mi reacción como líder</h3>
+ ${ta('ir_reaccion','La última vez que alguien de mi equipo me trajo un error, ¿cómo reaccioné? ¿A cuál columna se parece?','')}</div>
+ <div class="info"><b>Seguridad psicológica (Edmondson):</b> el termómetro no es si la gente se cae bien, sino si se atreve a hablar cuando algo va mal.</div>
  ${next('per','8.4 · La pérdida')}`}
-
 const PERD=['Estatus','Competencia','Certeza','Relaciones','Identidad','Autonomía'];
 function vPer(){
- return `<span class="code">8.4 · 7:55 · 25 min</span><h1>La pérdida que nadie nombra</h1>
+ const EJ=[['Estatus','"Esa herramienta todavía no es confiable"','"Si cualquiera puede hacerlo, dejo de ser importante"'],['Competencia','"El sistema anterior funcionaba bien"','"Aquí voy a parecer lento y torpe"'],['Certeza','"Necesitamos más información"','"No sé si mi cargo va a existir"'],['Relaciones','"Este equipo ya funciona"','"Pierdo a la gente con la que me cuido"'],['Identidad','"Yo no estudié para hacer reuniones"','"Si dejo lo técnico, no sé quién soy"'],['Autonomía','"Esto nos va a volver más lentos"','"Ya no confían en mí para decidir"']];
+ return `<span class="code">8.4 · 7:50 · 20 min</span><h1>La pérdida que nadie nombra</h1>
  <div class="info">La gente no resiste el cambio: resiste la pérdida que nadie le reconoce (Sesión 4).</div>
+ <div class="card"><table><tr><th>Pérdida</th><th>Lo que dice</th><th>Lo que no dice</th></tr>${EJ.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('')}</table></div>
  <div class="card">${ta('pe_cambio',M('Un cambio real que hoy le estoy pidiendo a mi equipo','Un cambio real que hoy vive mi equipo'),'Puede ser el de IA de anoche')}
- ${tx('pe_quien','El colaborador o compañero que más lo resiste (rol)','')}</div>
- <div class="card"><h3>Inversión de roles (12 min)</h3>
- <p class="small">1 min: le cuenta a su pareja el cambio. 4 min: su pareja anuncia el cambio y usted hace de esa persona, en primera persona: "Lo que yo pierdo con esto es…". 1 min: notas. Se invierten.</p>
+ ${tx('pe_quien','Quién lo resiste más (rol)','')}</div>
+ <div class="card"><h3>Inversión de roles en el trío · 3 rondas de 5 min</h3>
+ <p class="small">1 min: el dueño cuenta el cambio. 3 min: otro lo anuncia como líder y el dueño responde como esa persona: "Lo que yo pierdo con esto es…". 1 min: el observador dice qué pérdida escuchó.</p>
  <label>Lo que esa persona pierde</label>${chips('pe_pierde',PERD,true)}
  ${ta('pe_dije','Lo que dije siendo esa persona','Frase literal')}</div>
- <div class="card"><h3>Dos columnas (5 min)</h3>
- ${ta('pe_oculto','¿Qué compromiso oculto protege mi equipo al resistirse?','Cuarta columna del mapa de inmunidad (Kegan y Lahey)')}
- ${ta('pe_fabrico',M('¿Qué parte de esa resistencia fabrico yo: cómo lo anuncié, qué no pregunté, qué no reconocí?','¿Qué parte de la resistencia del equipo es mía?'),'Accountability sin culpa (Mark Samuel)')}</div>
+ <div class="card">${ta('pe_fabrico',M('¿Qué parte de esa resistencia fabrico yo: cómo lo anuncié, qué no pregunté, qué no reconocí?','¿Qué parte de la resistencia del equipo es mía?'),'Accountability sin culpa (Mark Samuel)')}</div>
  ${next('coach','8.5 · Coaching')}`}
-
 function vCoach(){
- return `<span class="code">8.5 · 8:20 · 50 min</span><h1>La persona que más me cuesta</h1>
+ return `<span class="code">8.5 · 8:10 · 55 min</span><h1>La persona que más me cuesta</h1>
  <div class="card"><h3>Momento de tensión · de pie, 45 segundos</h3>
  <div class="bigq">"La persona de mi equipo que más me cuesta ${M('liderar','influir')} es [rol], porque ___. Y lo que eso dice de mí es ___."</div>
  ${tx('co_rol','Rol (nunca el nombre)','')}${ta('co_porque','Porque…','')}${ta('co_dice','Y lo que eso dice de mí es…','')}</div>
@@ -330,31 +321,15 @@ function vCoach(){
  <tr><td><b>Opciones</b></td><td>¿Qué podrías hacer? ¿Qué más? ¿Qué harías si no tuvieras miedo?</td></tr>
  <tr><td><b>Voluntad</b></td><td>¿Qué vas a hacer, cuándo? Del 1 al 10, ¿qué tan seguro estás?</td></tr></table>
  <p class="small">Error típico: saltar de la realidad a las opciones demasiado rápido.</p></div>
- <div class="priv"><h3 style="margin-top:0">Privado · mi dato no dicho</h3><p class="small">Antes de su ronda como coachee. Solo sale si una pregunta lo alcanza. Ejemplos: "Yo también evito a esa persona en las reuniones". "Esa persona aspiraba a mi cargo".</p>
- ${ta('co_dato','Algo que no he dicho sobre esa persona o sobre mí','')}
- <label>¿Apareció en la conversación?</label>${chips('co_aparecio',['Sí','No'])}</div>
  <div class="card"><h3>Como observador</h3>
  <label>Consejos disfrazados de pregunta ("¿No has pensado en…?")</label>${chips('ob_consejos',['0','1','2','3','4 o más'])}
  <label>Etapa que se saltaron</label>${chips('ob_etapa',['Meta','Realidad','Opciones','Voluntad','Ninguna'],true)}
- ${ta('ob_pregunta','La pregunta que hizo aparecer algo nuevo','')}</div>
+ ${ta('ob_pregunta','La pregunta que movió algo','')}</div>
  <div class="card"><h3>Como coachee</h3>${ta('co_llevo','Lo que me llevo: mi siguiente paso con esa persona','')}
  ${ta('co_mentor','El consejo que me habría dado como mentor, y por qué fue mejor no darlo','')}</div>
- ${next('dist','8.6 · A distancia')}`}
+ ${next('plan','8.6 · Plan')}`}
 
-function vDist(){
- const rk=rompe();
- const niv=[1,2,3,4,5].map(i=>v('rn_'+i)).filter(Boolean);
- const cubre=rk&&niv.includes(nivName(rk));
- return `<span class="code">8.6 · 9:10 · 15 min</span><h1>Mi equipo a distancia</h1>
- <div class="card"><h3>Tres principios</h3><ol style="padding-left:18px"><li>El trabajo tiene que verse sin pedirlo.</li><li>Los ritmos tienen que ser explícitos.</li><li>La confianza se construye cumpliendo lo pequeño.</li></ol></div>
- <div class="card"><h3>Auditoría de rituales</h3><p class="small">Lo que hoy sostiene a su equipo: uno a uno, reunión semanal, chat, informes…</p>
- ${[1,2,3,4,5].map(i=>`<div class="dcard"><input type="text" data-k="ri_${i}" placeholder="Ritual ${i}" value="${esc(v('ri_'+i))}">
- <label>Qué nivel alimenta</label>${chips('rn_'+i,NIV.map(x=>x[1]))}<label>¿Funciona a distancia?</label>${chips('rd_'+i,['Sí','A medias','No'])}</div>`).join('')}
- ${rk?(cubre?`<div class="ok">Tiene al menos un ritual para <b>${nivName(rk)}</b>, donde se rompe su equipo. ¿Funciona?</div>`:`<div class="warn">Ningún ritual trabaja <b>${nivName(rk)}</b>, el nivel donde se rompe su equipo.</div>`):''}</div>
- <div class="card"><h3>De pie, en parejas</h3>
- ${ta('di_entero','Si mañana mi equipo trabajara 100 % remoto, ¿cómo me enteraría de que la persona que más me cuesta está mal antes de que renuncie?','')}</div>
- ${next('plan','8.7 · Plan')}`}
-
+function ritText(){let t='';[1,2,3].forEach(i=>{if(f('ri_'+i))t+=`- ${f('ri_'+i)} (${v('rn_'+i)||'—'}; a distancia: ${v('rd_'+i)||'—'})\n`});return t}
 const PULSO=['En este equipo puedo decir "me equivoqué" sin pagar un costo.','En las reuniones discutimos de frente los temas difíciles.','Salimos de las reuniones con claridad sobre qué se decidió y quién hace qué.','Entre compañeros nos decimos cuando algo no está bien hecho.','Ponemos los resultados del equipo por encima de los de cada área o persona.'];
 function pulsoText(){return `Pulso de equipo (anónimo, 2 minutos)\nResponda de 1 (nada cierto) a 5 (totalmente cierto):\n${PULSO.map((p,i)=>`${i+1}. ${p}`).join('\n')}\n6. ¿Qué debería empezar a hacer ${M('quien lidera este equipo','cada uno de nosotros')} para que funcionemos mejor?`}
 const TIPOS=['Ritual','Conversación de coaching','Reconocer la pérdida','Rol o conformación'];
@@ -365,7 +340,10 @@ function planText(){
 function vPlan(){
  const n=v('pl_nivel')||nivName(rompe());
  hooks.push(()=>{document.getElementById('cpP').onclick=()=>copyText(pulsoText());const b=document.getElementById('waPl');b.onclick=()=>{b.href=waLink(planText())}});
- return `<span class="code">8.7 · 9:25 · 25 min</span><h1>${M('Plan de acción de mi equipo','Plan de influencia en mi equipo')}</h1>
+ return `<span class="code">8.6 · 9:05 · 30 min</span><h1>${M('Plan de acción de mi equipo','Plan de influencia en mi equipo')}</h1>
+ <div class="card"><h3>Mis rituales hoy</h3><p class="small">Lo que hoy sostiene a su equipo: uno a uno, reunión semanal, chat, informes. El liderazgo remoto se trabaja aquí: ¿el ritual funciona si no están juntos?</p>
+ ${[1,2,3].map(i=>`<div class="dcard"><input type="text" data-k="ri_${i}" placeholder="Ritual ${i}" value="${esc(v('ri_'+i))}"><label>Qué nivel alimenta</label>${chips('rn_'+i,NIV.map(x=>x[1]))}<label>¿Funciona a distancia?</label>${chips('rd_'+i,['Sí','A medias','No'])}</div>`).join('')}
+ ${ta('di_entero','Si mañana mi equipo trabajara a distancia, ¿cómo me enteraría de que algo va mal antes de que explote?','')}</div>
  ${P()?'<div class="info">Tres acciones que puede ejecutar <b>sin autoridad formal</b>, desde su silla.</div>':''}
  <label>Nivel de la pirámide que voy a trabajar</label>${chips('pl_nivel',NIV.map(x=>x[1]))}
  ${!v('pl_nivel')&&n?`<p class="small">Sugerido por su radiografía: <b>${n}</b>.</p>`:''}
@@ -380,10 +358,10 @@ function vPlan(){
  <div class="note"><b>Hot seat en el trío (3 min):</b> "¿Esto es conducta o intención?", "¿Cómo lo comprobaría un tercero?" y "¿Dónde está la persona que más te cuesta en este plan?"</div>
  ${tx('testigo','Mi testigo','')}
  <div class="row"><a class="btn btn-g" id="waPl" target="_blank" rel="noopener" href="#">Enviar mi plan al testigo por WhatsApp</a></div>
- ${next('ficha','8.8 · Ficha')}`}
+ ${next('ficha','8.7 · Ficha')}`}
 
 function vFicha(){
- return `<span class="code">8.8 · Cierre</span><h1>Ficha de aprendizaje</h1>
+ return `<span class="code">8.7 · Cierre</span><h1>Ficha de aprendizaje</h1>
  <div class="card">${ta('fa_apr','Un aprendizaje de esta sesión','')}${ta('fa_bp','Una buena práctica aplicable a mi organización','')}${ta('fa_comp','Un compromiso con fecha','Puede ser la acción 1 de su plan')}</div>
  ${tx('palabra','Una palabra para cerrar','')}
  <div class="info"><b>Sesión 9 · miércoles 25:</b> sustenta este plan en 6 minutos, con los primeros datos del pulso. Se abren los sobres de la Sesión 1.</div>
@@ -394,13 +372,15 @@ function infText(){
  const p=perfil();
  let t=`SESIÓN 8 · LIDERANDO A OTROS · INSUMO PARA EL INFORME DE GESTIÓN\nLiderazgo y Dirección de Equipos e Individuos · MBA · Pontificia Universidad Javeriana\nEstudiante: ${f('nombre')}\n${L('Equipo',f('eq_que'))}${L('Mi relación con el equipo',v('modo'))}${L('Roles',f('eq_roles'))}`;
  t+=`\n1. DIAGNÓSTICO\nPerfil de la radiografía (1 a 5): ${NIV.map(([k,n])=>`${n} ${p[k]===null?'—':String(p[k]).replace('.',',')}`).join(' · ')}\nDonde se rompe: ${nivName(rompe())}\n`;
+ t+=L('Hecho que lo muestra',f('p_hecho'))+L('Lo que yo alimento',f('p_alimento'));
  NIV.forEach(([k,n])=>{t+=L('Conducta observable · '+n,f('p_conducta_'+k))});
- t+=L('Lo que yo alimento',f('p_alimento'))+L('Capacidad o rol que falta',f('p_rol'))+L('Mi 360° / mapa de brecha',f('p_360'))+L('Estilo que sobra o falta',f('p_estilo'))+L('Filtro (S6)',f('p_filtro'))+L('Lo que dijo el vocero de mi equipo',f('p_vocero'))+L('Lo que me llevo',f('p_llevo'));
- t+=`\n2. RESISTENCIA AL CAMBIO\n`+L('Cambio',f('pe_cambio'))+L('Pérdidas',(v('pe_pierde',[])||[]).join(', '))+L('Compromiso oculto del equipo',f('pe_oculto'))+L('Lo que fabrico yo',f('pe_fabrico'));
- t+=`\n3. LA PERSONA QUE MÁS ME CUESTA\n`+L('Rol',f('co_rol'))+L('Porque',f('co_porque'))+L('Lo que dice de mí',f('co_dice'))+L('Mi siguiente paso',f('co_llevo'));
- t+=`\n4. RITUALES\n`;[1,2,3,4,5].forEach(i=>{if(f('ri_'+i))t+=`- ${f('ri_'+i)} (${v('rn_'+i)||'—'}; a distancia: ${v('rd_'+i)||'—'})\n`});t+=L('A distancia',f('di_entero'));
- t+=`\n5. `+planText()+`\n\n6. FICHA DE APRENDIZAJE\n`+L('Aprendizaje',f('fa_apr'))+L('Buena práctica',f('fa_bp'))+L('Compromiso con fecha',f('fa_comp'));
- t+=`\n7. COMPROMISO DE LA SESIÓN 7 (primer intento)\n`+L('Estado',v('s7_hice'))+L('Qué pasó',f('s7_paso'));
+ t+=L('Capacidad o rol que falta',f('p_rol'))+L('Mi 360° / mapa de brecha',f('p_360'))+L('Estilo que sobra o falta',f('p_estilo'))+L('Filtro (S6)',f('p_filtro'));
+ t+=`\n2. CONFIANZA Y SEGURIDAD PSICOLÓGICA\n`+L('Lo que nos hizo atrevernos',f('ir_atrever'))+L('Lo que nos habría callado',f('ir_callado'))+L('Mi reacción cuando alguien de mi equipo me trae un error',f('ir_reaccion'));
+ t+=`\n3. RESISTENCIA AL CAMBIO\n`+L('Cambio',f('pe_cambio'))+L('Quién lo resiste más',f('pe_quien'))+L('Pérdidas',(v('pe_pierde',[])||[]).join(', '))+L('Lo que fabrico yo',f('pe_fabrico'));
+ t+=`\n4. LA PERSONA QUE MÁS ME CUESTA\n`+L('Rol',f('co_rol'))+L('Porque',f('co_porque'))+L('Lo que dice de mí',f('co_dice'))+L('Mi siguiente paso',f('co_llevo'));
+ t+=`\n5. RITUALES Y TRABAJO A DISTANCIA\n`+ritText()+L('A distancia',f('di_entero'));
+ t+=`\n6. `+planText()+`\n\n7. FICHA DE APRENDIZAJE\n`+L('Aprendizaje',f('fa_apr'))+L('Buena práctica',f('fa_bp'))+L('Compromiso con fecha',f('fa_comp'));
+ t+=`\n8. COMPROMISO DE LA SESIÓN 7 (primer intento)\n`+L('Estado',v('s7_hice'))+L('Qué pasó',f('s7_paso'));
  return t}
 function docHtml(){const body=esc(infText()).replace(/\n/g,'<br>');
  return `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><title>Sesión 8</title></head><body style="font-family:Calibri,Arial;font-size:11pt"><p><img src="data:image/png;base64,${LOGO}" width="200" height="59"></p><p style="color:#B8891C"><b>Albeiro Herrera C.</b></p>${body}</body></html>`}
@@ -412,7 +392,7 @@ function vInf(){
   document.getElementById('clr').onclick=()=>{const b=document.getElementById('clr');if(b.dataset.c){S={};save();toast('Kit borrado');go('inicio')}else{b.dataset.c=1;b.textContent='Toque otra vez para borrar todo'}}});
  return `<h1>Para mi Informe</h1>
  <p class="sub">Esta sesión no tiene taller aparte: su diagnóstico y su plan son el componente <b>"plan de desarrollo de equipo"</b> del Informe de Gestión (2 de diciembre), y se sustentan en la Sesión 9. Use Lencioni y Whitmore como sustento.</p>
- <div class="info">Las partes privadas (el dato no dicho) no salen aquí.</div>
+ <div class="info">Lo que escribió en privado en "Ir primero" no sale aquí.</div>
  <div class="row"><button class="btn btn-p" id="dlDoc">Descargar en Word</button><a class="btn btn-g" id="waAll" target="_blank" rel="noopener" href="#">Enviarme todo por WhatsApp</a><button class="btn btn-s" id="cpAll">Copiar todo</button></div>
  <pre class="out">${esc(infText())}</pre>
  <div class="row"><button class="btn btn-s" id="clr">Borrar mis datos de este dispositivo</button></div>`}
